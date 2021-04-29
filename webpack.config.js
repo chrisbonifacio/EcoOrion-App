@@ -16,10 +16,12 @@ const compileNodeModules = [
   '@react-native-picker',
   'react-native-web',
   '@codler',
+  'graphql',
+  '@aws-amplify',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`));
 
 const babelLoaderConfiguration = {
-  test: /\.js$|tsx?$/,
+  test: /\.js$|mjs?$|tsx?$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
     path.resolve(__dirname, 'index.web.js'), // Entry to your application
@@ -66,10 +68,11 @@ module.exports = {
     filename: 'rnw_blogpost.bundle.js',
   },
   resolve: {
-    extensions: ['.web.js', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
+    extensions: ['.web.js', '.web.ts', '.tsx', '.ts', '.web.js', '.js', '.mjs'],
     alias: {
       'react-native$': 'react-native-web',
     },
+    mainFields: ['browser', 'main', 'module'],
   },
   module: {
     rules: [
