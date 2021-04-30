@@ -11,17 +11,15 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
-  useColorScheme,
 } from 'react-native';
+import { withAuthenticator } from '@aws-amplify/ui-react'
 
 import {Container, Text} from 'native-base';
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Container>
           <Text>Using native-base</Text>
@@ -31,4 +29,5 @@ const App = () => {
   );
 };
 
-export default App;
+// export default App;
+export default withAuthenticator(App)
