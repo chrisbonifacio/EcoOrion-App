@@ -1,15 +1,15 @@
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
 import App from './App';
-import { Amplify } from 'aws-amplify'
-import config from './src/aws-exports'
+import {Amplify} from 'aws-amplify';
+import config from './src/aws-exports';
 
 Amplify.configure({
   ...config,
   Analytics: {
     disabled: true,
-  }
-})
+  },
+});
 
 if (module.hot) {
   module.hot.accept();

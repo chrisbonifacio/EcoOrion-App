@@ -7,12 +7,8 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-} from 'react-native';
-import { withAuthenticator } from 'aws-amplify-react-native'
+import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {withAuthenticator} from 'aws-amplify-react-native';
 import {Container, Text} from 'native-base';
 
 const App = () => {

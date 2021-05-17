@@ -7,16 +7,11 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-} from 'react-native';
-import { withAuthenticator } from '@aws-amplify/ui-react'
+import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {withAuthenticator} from '@aws-amplify/ui-react';
 
 import {Container, Text} from 'native-base';
 const App = () => {
-
   return (
     <SafeAreaView>
       <StatusBar />
@@ -30,4 +25,4 @@ const App = () => {
 };
 
 // export default App;
-export default withAuthenticator(App)
+export default withAuthenticator(App);
