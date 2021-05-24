@@ -24,6 +24,8 @@ import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import HomeScreen from './src/views/HomeScreen';
 import {Authenticator, SignIn} from 'aws-amplify-react-native';
 import SettingScreen from './src/views/settings/index';
+
+import {AppDrawer} from './src/component/Drawer';
 // Apply plugin with configuration
 Amplify.addPluggable(
   new AWSIoTProvider({
@@ -71,7 +73,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Drawer.Navigator>
+        <Drawer.Navigator initialRouteName="Setting" drawerContent={AppDrawer}>
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Setting" component={SettingScreen} />
         </Drawer.Navigator>

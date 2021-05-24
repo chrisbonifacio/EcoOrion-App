@@ -1,20 +1,6 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
-import {
-  Container,
-  Header,
-  Title,
-  Left,
-  Icon,
-  Right,
-  Button,
-  Body,
-  Content,
-  Text,
-  Card,
-  CardItem,
-} from 'native-base';
-import AppLayout from '../../container/App';
+import {Body, Text, Card, CardItem} from 'native-base';
+import {AppLayout} from '../../container/App';
 
 const SettingScreen = ({navigation}) => {
   return (
@@ -22,7 +8,7 @@ const SettingScreen = ({navigation}) => {
       <Card>
         <CardItem>
           <Body>
-            <Text>Chat App to talk some awesome people!</Text>
+            <Text>Chat Settings to talk some awesome people!</Text>
           </Body>
         </CardItem>
       </Card>
