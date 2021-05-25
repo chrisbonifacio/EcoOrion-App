@@ -1,5 +1,6 @@
+import {Body, Button, Card, CardItem, Text} from 'native-base';
 import React from 'react';
-import {Card, CardItem, Body, Text, Button} from 'native-base';
+
 import {AppLayout} from '../container/App';
 const HomeScreen = ({navigation}) => {
   return (

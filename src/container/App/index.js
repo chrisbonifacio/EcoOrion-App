@@ -1,17 +1,16 @@
-import React from 'react';
 import {
-  Root,
-  Container,
-  Header,
-  Text,
-  Content,
-  Title,
   Body,
-  Left,
   Button,
+  Container,
+  Content,
+  Header,
   Icon,
+  Left,
   Right,
+  Root,
+  Title,
 } from 'native-base';
+import React from 'react';
 
 export const AppLayout = ({navigation, children}) => {
   console.log(navigation);

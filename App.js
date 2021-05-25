@@ -6,26 +6,15 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {withAuthenticator} from 'aws-amplify-react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-
-import {View, Button} from 'react-native';
-import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
-import Amplify, {PubSub, Auth} from 'aws-amplify';
 import {AWSIoTProvider} from '@aws-amplify/pubsub';
-import HomeScreen from './src/views/HomeScreen';
-import {Authenticator, SignIn} from 'aws-amplify-react-native';
-import SettingScreen from './src/views/settings/index';
+import {NavigationContainer} from '@react-navigation/native';
+import Amplify, {Auth, PubSub} from 'aws-amplify';
+import {withAuthenticator} from 'aws-amplify-react-native';
+import React from 'react';
+import {Provider} from 'react-redux';
 
-import {AppDrawer} from './src/component/Drawer';
+import {FirstTimeRegistration} from './src/hook/FirstTimeRegistration';
+import {store} from './src/redux/store';
 // Apply plugin with configuration
 Amplify.addPluggable(
   new AWSIoTProvider({
@@ -68,15 +57,11 @@ Amplify.addPluggable(
 //   );
 // }
 
-const Drawer = createDrawerNavigator();
 const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Setting" drawerContent={AppDrawer}>
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="Setting" component={SettingScreen} />
-        </Drawer.Navigator>
+        <FirstTimeRegistration />
       </NavigationContainer>
     </Provider>
   );

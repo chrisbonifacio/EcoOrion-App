@@ -1,5 +1,6 @@
+import {Body, Card, CardItem, Text} from 'native-base';
 import React from 'react';
-import {Body, Text, Card, CardItem} from 'native-base';
+
 import {AppLayout} from '../../container/App';
 
 const SettingScreen = ({navigation}) => {

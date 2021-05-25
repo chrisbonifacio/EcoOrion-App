@@ -1,10 +1,10 @@
-import React from 'react';
 import {
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
+  DrawerItemList,
 } from '@react-navigation/drawer';
 import {Container, Text} from 'native-base';
+import React from 'react';
 export const AppDrawer = props => {
   return (
     <Container style={{flex: 1}}>
