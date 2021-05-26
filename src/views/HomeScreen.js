@@ -4,7 +4,7 @@ import React from 'react';
 import {AppLayout} from '../container/App';
 const HomeScreen = ({navigation}) => {
   return (
-    <AppLayout navigation={navigation}>
+    <AppLayout navigation={navigation} title={'Home'}>
       <Card>
         <CardItem>
           <Body>

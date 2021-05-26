@@ -12,8 +12,7 @@ import {
 } from 'native-base';
 import React from 'react';
 
-export const AppLayout = ({navigation, children}) => {
-  console.log(navigation);
+export const AppLayout = ({navigation, children, title}) => {
   return (
     <Root>
       <Container>
@@ -28,10 +27,14 @@ export const AppLayout = ({navigation, children}) => {
             </Button>
           </Left>
           <Body>
-            <Title>Header</Title>
+            <Title>{title ? title : 'Header'}</Title>
           </Body>
           <Right>
-            <Button transparent>
+            <Button
+              transparent
+              onPress={() => {
+                navigation.navigate('Setting');
+              }}>
               <Icon name="settings" />
             </Button>
           </Right>

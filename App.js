@@ -10,6 +10,7 @@ import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import {NavigationContainer} from '@react-navigation/native';
 import Amplify, {Auth, PubSub} from 'aws-amplify';
 import {withAuthenticator} from 'aws-amplify-react-native';
+import {Text} from 'native-base';
 import React from 'react';
 import {Provider} from 'react-redux';
 
