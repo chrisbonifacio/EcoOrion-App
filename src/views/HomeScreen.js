@@ -2,13 +2,13 @@ import {Body, Button, Card, CardItem, Text} from 'native-base';
 import React from 'react';
 
 import {AppLayout} from '../container/App';
-const HomeScreen = ({navigation}) => {
+export const HomeScreen = ({navigation}) => {
   return (
     <AppLayout navigation={navigation} title={'Home'}>
       <Card>
         <CardItem>
           <Body>
-            <Text>Chat App to talk some awesome people!</Text>
+            <Text>Welcome to Eco-Orion 1m2 Farmer's app</Text>
           </Body>
         </CardItem>
       </Card>
@@ -17,8 +17,8 @@ const HomeScreen = ({navigation}) => {
         rounded
         dark
         style={{marginTop: 10}}
-        onPress={() => navigation.navigate('Setting')}>
-        <Text>Chat With People</Text>
+        onPress={() => navigation.navigate('Station')}>
+        <Text>Station</Text>
       </Button>
       <Button
         full
@@ -26,10 +26,8 @@ const HomeScreen = ({navigation}) => {
         primary
         style={{marginTop: 10}}
         onPress={() => navigation.navigate('Setting')}>
-        <Text>Goto Profiles</Text>
+        <Text>Go to Settings</Text>
       </Button>
     </AppLayout>
   );
 };
-
-export default HomeScreen;

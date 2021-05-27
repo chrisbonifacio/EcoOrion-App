@@ -171,3 +171,14 @@ export const updateStation = async stationDetail => {
 export const deleteStation = async id => {
   return API.graphql(graphqlOperation(mutations.deleteStation, {input: {id}}));
 };
+export const stationByUserID = async id => {
+  return API.graphql(graphqlOperation(queries.stationByUserID, {user_id: id}));
+};
+export const ByStationIDAndUserID = async (user_id, station_id) => {
+  return API.graphql(
+    graphqlOperation(queries.stationByStationIDAndUserID, {
+      user_id: {eq: user_id},
+      station_id: station_id,
+    }),
+  );
+};

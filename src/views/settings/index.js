@@ -19,7 +19,7 @@ import {Alert} from 'react-native';
 import {getProfile, updateProfile} from '../../api';
 import {AppLayout} from '../../container/App';
 
-const SettingScreen = ({navigation}) => {
+export const SettingScreen = ({navigation}) => {
   const [settings, updateSettings] = useState({
     name: '',
     email: '',
@@ -173,4 +173,3 @@ const SettingScreen = ({navigation}) => {
     </AppLayout>
   );
 };
-export default SettingScreen;

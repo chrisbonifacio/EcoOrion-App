@@ -719,7 +719,6 @@ export const createStation = /* GraphQL */ `
   ) {
     createStation(input: $input, condition: $condition) {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -729,6 +728,8 @@ export const createStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
@@ -741,7 +742,6 @@ export const updateStation = /* GraphQL */ `
   ) {
     updateStation(input: $input, condition: $condition) {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -751,6 +751,8 @@ export const updateStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
@@ -763,7 +765,6 @@ export const deleteStation = /* GraphQL */ `
   ) {
     deleteStation(input: $input, condition: $condition) {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -773,6 +774,8 @@ export const deleteStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }

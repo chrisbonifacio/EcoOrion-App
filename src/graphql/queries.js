@@ -500,7 +500,6 @@ export const getStation = /* GraphQL */ `
   query GetStation($id: ID!) {
     getStation(id: $id) {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -510,6 +509,8 @@ export const getStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
@@ -524,7 +525,6 @@ export const listStations = /* GraphQL */ `
     listStations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user_id
         water_schedule {
           cron
           duration
@@ -534,6 +534,152 @@ export const listStations = /* GraphQL */ `
           duration
         }
         station_name
+        station_id
+        user_id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stationByUserID = /* GraphQL */ `
+  query StationByUserID(
+    $user_id: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelStationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    StationByUserID(
+      user_id: $user_id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        water_schedule {
+          cron
+          duration
+        }
+        fertilizer_schedule {
+          cron
+          duration
+        }
+        station_name
+        station_id
+        user_id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stationByStationID = /* GraphQL */ `
+  query StationByStationID(
+    $station_id: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelStationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    StationByStationID(
+      station_id: $station_id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        water_schedule {
+          cron
+          duration
+        }
+        fertilizer_schedule {
+          cron
+          duration
+        }
+        station_name
+        station_id
+        user_id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stationByStationIDAndUserID = /* GraphQL */ `
+  query StationByStationIDAndUserID(
+    $station_id: String
+    $user_id: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    StationByStationIDAndUserID(
+      station_id: $station_id
+      user_id: $user_id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        water_schedule {
+          cron
+          duration
+        }
+        fertilizer_schedule {
+          cron
+          duration
+        }
+        station_name
+        station_id
+        user_id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stationByStationIDAndStationName = /* GraphQL */ `
+  query StationByStationIDAndStationName(
+    $station_id: String
+    $station_name: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    StationByStationIDAndStationName(
+      station_id: $station_id
+      station_name: $station_name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        water_schedule {
+          cron
+          duration
+        }
+        fertilizer_schedule {
+          cron
+          duration
+        }
+        station_name
+        station_id
+        user_id
         createdAt
         updatedAt
       }

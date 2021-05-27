@@ -5,10 +5,10 @@ import React, {useEffect, useState} from 'react';
 
 import {getProfile} from '../api/index';
 import {AppDrawer} from '../component/Drawer';
-import HomeScreen from '../views/HomeScreen';
+import {HomeScreen} from '../views/HomeScreen';
 import {ProfileRegistration} from '../views/profile/Registration';
-import SettingScreen from '../views/settings';
-
+import {SettingScreen} from '../views/settings';
+import {StationScreen} from '../views/Station';
 export const FirstTimeRegistration = ({children}) => {
   const [profile, updateProfile] = useState({});
 
@@ -38,6 +38,7 @@ export const FirstTimeRegistration = ({children}) => {
         <Drawer.Navigator initialRouteName="Home" drawerContent={AppDrawer}>
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Setting" component={SettingScreen} />
+          <Drawer.Screen name="Station" component={StationScreen} />
         </Drawer.Navigator>
       )}
     </>

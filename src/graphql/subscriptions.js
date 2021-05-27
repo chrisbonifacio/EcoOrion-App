@@ -635,7 +635,6 @@ export const onCreateStation = /* GraphQL */ `
   subscription OnCreateStation {
     onCreateStation {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -645,6 +644,8 @@ export const onCreateStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
@@ -654,7 +655,6 @@ export const onUpdateStation = /* GraphQL */ `
   subscription OnUpdateStation {
     onUpdateStation {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -664,6 +664,8 @@ export const onUpdateStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
@@ -673,7 +675,6 @@ export const onDeleteStation = /* GraphQL */ `
   subscription OnDeleteStation {
     onDeleteStation {
       id
-      user_id
       water_schedule {
         cron
         duration
@@ -683,6 +684,8 @@ export const onDeleteStation = /* GraphQL */ `
         duration
       }
       station_name
+      station_id
+      user_id
       createdAt
       updatedAt
     }
