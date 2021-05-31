@@ -55,7 +55,10 @@ export const ScheduleInput = ({state, updateState, field}) => {
       return {
         ...prev,
         all: state[field].cron.split(' ')[3] === '*' ? true : false,
-        time: state[field].cron.split(' ')[3],
+        time:
+          state[field].cron.split(' ')[3] === '*'
+            ? ''
+            : state[field].cron.split(' ')[3],
       };
     });
   }, [state, field]);

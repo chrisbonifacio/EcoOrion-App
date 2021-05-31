@@ -57,7 +57,7 @@ export const StationDetail = ({navigation, route}) => {
               id: dataLoaded.id,
               station_name: dataLoaded.station_name,
               water_schedule: dataLoaded.water_schedule,
-              fertilizer_schedule: dataLoaded.water_schedule,
+              fertilizer_schedule: dataLoaded.fertilizer_schedule,
             };
           });
         }
@@ -71,7 +71,7 @@ export const StationDetail = ({navigation, route}) => {
     if (
       state.station_name === '' ||
       state.water_schedule.cron === '' ||
-      state.water_schedule.duration === '' ||
+      state.fertilizer_schedule.duration === '' ||
       state.fertilizer_schedule.cron === '' ||
       state.fertilizer_schedule.duration === ''
     ) {
