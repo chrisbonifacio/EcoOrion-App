@@ -1,7 +1,8 @@
+import {Amplify, API} from 'aws-amplify';
 import {AppRegistry} from 'react-native';
-import {name as appName} from './app.json';
+
 import App from './App';
-import {Amplify} from 'aws-amplify';
+import {name as appName} from './app.json';
 import config from './src/aws-exports';
 
 Amplify.configure({
@@ -10,7 +11,9 @@ Amplify.configure({
     disabled: true,
   },
 });
-
+API.configure({
+  ...config,
+});
 if (module.hot) {
   module.hot.accept();
 }

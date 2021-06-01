@@ -10,7 +10,6 @@ export const StationRoot = ({navigation}) => {
     React.useCallback(() => {
       Auth.currentAuthenticatedUser().then(async user => {
         const getStation = await stationByUserID(user.attributes.email);
-        console.log(getStation.data.StationByUserID.items.length);
         if (getStation.data.StationByUserID.items.length > 0) {
           let newStations = [];
           getStation.data.StationByUserID.items.forEach(element => {
