@@ -127,42 +127,6 @@ export const onDeleteContactForm = /* GraphQL */ `
     }
   }
 `;
-export const onCreateStationData = /* GraphQL */ `
-  subscription OnCreateStationData {
-    onCreateStationData {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateStationData = /* GraphQL */ `
-  subscription OnUpdateStationData {
-    onUpdateStationData {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteStationData = /* GraphQL */ `
-  subscription OnDeleteStationData {
-    onDeleteStationData {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateProfile = /* GraphQL */ `
   subscription OnCreateProfile($owner: String) {
     onCreateProfile(owner: $owner) {
@@ -632,8 +596,8 @@ export const onDeleteNutrientTerminology = /* GraphQL */ `
   }
 `;
 export const onCreateStation = /* GraphQL */ `
-  subscription OnCreateStation {
-    onCreateStation {
+  subscription OnCreateStation($owner: String) {
+    onCreateStation(owner: $owner) {
       id
       water_schedule {
         cron
@@ -648,12 +612,13 @@ export const onCreateStation = /* GraphQL */ `
       user_id
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateStation = /* GraphQL */ `
-  subscription OnUpdateStation {
-    onUpdateStation {
+  subscription OnUpdateStation($owner: String) {
+    onUpdateStation(owner: $owner) {
       id
       water_schedule {
         cron
@@ -668,12 +633,13 @@ export const onUpdateStation = /* GraphQL */ `
       user_id
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteStation = /* GraphQL */ `
-  subscription OnDeleteStation {
-    onDeleteStation {
+  subscription OnDeleteStation($owner: String) {
+    onDeleteStation(owner: $owner) {
       id
       water_schedule {
         cron
@@ -686,6 +652,40 @@ export const onDeleteStation = /* GraphQL */ `
       station_name
       station_id
       user_id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateStationData = /* GraphQL */ `
+  subscription OnCreateStationData {
+    onCreateStationData {
+      station_id
+      sample_time
+      station_data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateStationData = /* GraphQL */ `
+  subscription OnUpdateStationData {
+    onUpdateStationData {
+      station_id
+      sample_time
+      station_data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteStationData = /* GraphQL */ `
+  subscription OnDeleteStationData {
+    onDeleteStationData {
+      station_id
+      sample_time
+      station_data
       createdAt
       updatedAt
     }

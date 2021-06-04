@@ -182,3 +182,37 @@ export const ByStationIDAndUserID = async (user_id, station_id) => {
     }),
   );
 };
+
+export const stationDataByStationID = async station_id => {
+  return API.graphql(
+    graphqlOperation(
+      `
+    query StationDataByStationID(
+      $station_id: String
+      $sortDirection: ModelSortDirection
+      $limit: Int
+    ) {
+      StationDataByStationID(
+        station_id: $station_id
+        sortDirection: $sortDirection
+        limit: $limit
+      ) {
+        items {
+          station_id
+          sample_time
+          station_data
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  `,
+      {
+        station_id: station_id,
+        sortDirection: 'DESC',
+        limit: 1,
+      },
+    ),
+  );
+};

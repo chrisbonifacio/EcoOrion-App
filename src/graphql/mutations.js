@@ -588,36 +588,6 @@ export const deleteContactForm = /* GraphQL */ `
     }
   }
 `;
-export const updateStationData = /* GraphQL */ `
-  mutation UpdateStationData(
-    $input: UpdateStationDataInput!
-    $condition: ModelStationDataConditionInput
-  ) {
-    updateStationData(input: $input, condition: $condition) {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteStationData = /* GraphQL */ `
-  mutation DeleteStationData(
-    $input: DeleteStationDataInput!
-    $condition: ModelStationDataConditionInput
-  ) {
-    deleteStationData(input: $input, condition: $condition) {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createProfile = /* GraphQL */ `
   mutation CreateProfile(
     $input: CreateProfileInput!
@@ -697,21 +667,6 @@ export const createContactForm = /* GraphQL */ `
     }
   }
 `;
-export const createStationData = /* GraphQL */ `
-  mutation CreateStationData(
-    $input: CreateStationDataInput!
-    $condition: ModelStationDataConditionInput
-  ) {
-    createStationData(input: $input, condition: $condition) {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createStation = /* GraphQL */ `
   mutation CreateStation(
     $input: CreateStationInput!
@@ -732,6 +687,7 @@ export const createStation = /* GraphQL */ `
       user_id
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -755,6 +711,7 @@ export const updateStation = /* GraphQL */ `
       user_id
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -776,6 +733,49 @@ export const deleteStation = /* GraphQL */ `
       station_name
       station_id
       user_id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createStationData = /* GraphQL */ `
+  mutation CreateStationData(
+    $input: CreateStationDataInput!
+    $condition: ModelStationDataConditionInput
+  ) {
+    createStationData(input: $input, condition: $condition) {
+      station_id
+      sample_time
+      station_data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateStationData = /* GraphQL */ `
+  mutation UpdateStationData(
+    $input: UpdateStationDataInput!
+    $condition: ModelStationDataConditionInput
+  ) {
+    updateStationData(input: $input, condition: $condition) {
+      station_id
+      sample_time
+      station_data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteStationData = /* GraphQL */ `
+  mutation DeleteStationData(
+    $input: DeleteStationDataInput!
+    $condition: ModelStationDataConditionInput
+  ) {
+    deleteStationData(input: $input, condition: $condition) {
+      station_id
+      sample_time
+      station_data
       createdAt
       updatedAt
     }

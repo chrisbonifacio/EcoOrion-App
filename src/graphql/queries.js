@@ -99,37 +99,6 @@ export const listContactForms = /* GraphQL */ `
     }
   }
 `;
-export const getStationData = /* GraphQL */ `
-  query GetStationData($id: ID!) {
-    getStationData(id: $id) {
-      id
-      data_type
-      value
-      data_created
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listStationDatas = /* GraphQL */ `
-  query ListStationDatas(
-    $filter: ModelStationDataFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listStationDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        data_type
-        value
-        data_created
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getProfile = /* GraphQL */ `
   query GetProfile($email: String!) {
     getProfile(email: $email) {
@@ -513,6 +482,7 @@ export const getStation = /* GraphQL */ `
       user_id
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -538,6 +508,7 @@ export const listStations = /* GraphQL */ `
         user_id
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -573,6 +544,7 @@ export const stationByUserID = /* GraphQL */ `
         user_id
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -608,6 +580,7 @@ export const stationByStationID = /* GraphQL */ `
         user_id
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -645,6 +618,7 @@ export const stationByStationIDAndUserID = /* GraphQL */ `
         user_id
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -680,6 +654,72 @@ export const stationByStationIDAndStationName = /* GraphQL */ `
         station_name
         station_id
         user_id
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getStationData = /* GraphQL */ `
+  query GetStationData($sample_time: AWSTimestamp!) {
+    getStationData(sample_time: $sample_time) {
+      station_id
+      sample_time
+      station_data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listStationDatas = /* GraphQL */ `
+  query ListStationDatas(
+    $sample_time: AWSTimestamp
+    $filter: ModelStationDataFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listStationDatas(
+      sample_time: $sample_time
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        station_id
+        sample_time
+        station_data
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stationDataByStationID = /* GraphQL */ `
+  query StationDataByStationID(
+    $station_id: String
+    $sample_time: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelStationDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    StationDataByStationID(
+      station_id: $station_id
+      sample_time: $sample_time
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        station_id
+        sample_time
+        station_data
         createdAt
         updatedAt
       }

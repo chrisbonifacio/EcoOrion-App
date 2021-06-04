@@ -11,6 +11,8 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 
+import {stationDataByStationID} from '../../api';
+
 export const StationDashboard = ({navigation, route}) => {
   const [water, updateWater] = useState(0);
   const [fertilizer, updateFertilizer] = useState(0);
@@ -22,13 +24,38 @@ export const StationDashboard = ({navigation, route}) => {
     humidity_level: '',
   });
 
-  PubSub.subscribe(`device/${route.params.station.station_id}/data`).subscribe({
-    next: data => {
-      updateStationData(data.value);
-    },
-    error: error => console.error(error),
-    close: () => console.log('Done'),
-  });
+  useEffect(() => {
+    const test = async () => {
+      const res = await stationDataByStationID(route.params.station.station_id);
+
+      const stationData = JSON.parse(
+        res.data.StationDataByStationID.items[0].station_data.replaceAll(
+          "'",
+          '"',
+        ),
+      );
+      if (res.data.StationDataByStationID.items.length > 0) {
+        updateStationData({
+          time: res.data.StationDataByStationID.items[0].createdAt,
+          light_intensity: stationData.light_intensity,
+          soil_moisture: stationData.soil_moisture,
+          rain_percentage: stationData.rain_percentage,
+          humidity_level: stationData.humidity_level,
+        });
+      }
+    };
+    test();
+
+    PubSub.subscribe(
+      `device/${route.params.station.station_id}/data`,
+    ).subscribe({
+      next: data => {
+        updateStationData(data.value);
+      },
+      error: error => console.error(error),
+      close: () => console.log('Done'),
+    });
+  }, [route.params.station.station_id]);
 
   const triggerStationControl = type => {
     if (
