@@ -9,6 +9,7 @@ import {HomeScreen} from '../views/HomeScreen';
 import {ProfileRegistration} from '../views/profile/Registration';
 import {SettingScreen} from '../views/settings';
 import {StationScreen} from '../views/Station';
+import {WebScreen} from '../views/Web';
 export const FirstTimeRegistration = ({children}) => {
   const [profile, updateProfile] = useState({});
 
@@ -39,6 +40,7 @@ export const FirstTimeRegistration = ({children}) => {
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Setting" component={SettingScreen} />
           <Drawer.Screen name="Station" component={StationScreen} />
+          <Drawer.Screen name="Web" component={WebScreen} />
         </Drawer.Navigator>
       )}
     </>
