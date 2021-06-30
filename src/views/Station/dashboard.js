@@ -67,10 +67,24 @@ export const StationDashboard = ({navigation, route}) => {
       return;
     }
 
-    PubSub.publish('trigger/' + route.params.station.station_id, {
-      type: type,
-      duration: type === 'water' ? water : fertilizer,
-    }).then(() => {
+    console.log(type === 'water');
+    console.log(
+      type === 'water'
+        ? 'trigger/' + route.params.station.station_id + '/water'
+        : 'trigger/' + route.params.station.station_id + '/fertilizer',
+    );
+    console.log(type === 'water' ? water : fertilizer);
+    console.log();
+
+    PubSub.publish(
+      type === 'water'
+        ? 'trigger/' + route.params.station.station_id + '/water'
+        : 'trigger/' + route.params.station.station_id + '/fertilizer',
+      {
+        type: type,
+        duration: type === 'water' ? water : fertilizer,
+      },
+    ).then(() => {
       Alert.alert('Triggered', 'Triggered Successfully');
     });
   };
