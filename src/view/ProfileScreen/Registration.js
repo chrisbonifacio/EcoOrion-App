@@ -32,7 +32,7 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
       // const res = await getProfile(user.attributes.email);
       const res = await getProfile(user.attributes.email);
       updateSettings(prev => {
-        return {...prev, ...res.data.getProfile};
+        return {...prev, ...res.data.getProfile, email: user.attributes.email};
       });
     };
     getSettingsFunction();
@@ -93,6 +93,7 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
             />
             <TextInput
               title="Email"
+              disabled={true}
               value={settings.email}
               triggerFunction={value => updateState(value, 'email')}
             />
