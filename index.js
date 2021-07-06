@@ -3,7 +3,7 @@
  */
 import 'react-native-gesture-handler';
 
-import Amplify, {API} from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import {AppRegistry} from 'react-native';
 
 import App from './App';
@@ -16,6 +16,5 @@ Amplify.configure({
     disabled: true,
   },
 });
-API.configure();
 
 AppRegistry.registerComponent(appName, () => App);

@@ -1,18 +1,8 @@
-import {
-  Body,
-  Card,
-  CardItem,
-  CheckBox,
-  Content,
-  Input,
-  Item,
-  Label,
-  ListItem,
-  Text,
-} from 'native-base';
+import {Box, Input, Radio, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
 
-export const ScheduleInput = ({state, updateState, field}) => {
+import {TextInput} from '../TextInput';
+export const ScheduleInput = ({state, updateState, field, title}) => {
   const [duration, updateDuration] = useState(state[field].duration);
   const [days, updateDays] = useState({
     all: state[field].cron.split(' ')[4] === '*' ? true : false,
@@ -63,98 +53,108 @@ export const ScheduleInput = ({state, updateState, field}) => {
     });
   }, [state, field]);
   return (
-    <Content>
-      <Item>
-        <Label style={{marginLeft: 20, marginRight: 20}}>Duration</Label>
-        <Input
-          style={{marginLeft: 20, marginRight: 20}}
-          value={duration}
-          placeholder="(Seconds)"
-          onChangeText={value => {
-            updateState(prev => {
-              prev[field].duration = value;
-              return prev;
+    <Box>
+      <Text bold fontSize="lg" mt={4} mb={2}>
+        {title}
+      </Text>
+
+      <TextInput
+        title="Duration(Second)"
+        value={duration}
+        triggerFunction={value => {
+          updateState(prev => {
+            prev[field].duration = value;
+            return prev;
+          });
+          updateDuration(value);
+        }}
+      />
+
+      <Box my={2} />
+      <Text _text={{color: 'muted.700'}} mt={2}>
+        Days
+      </Text>
+      {days.all}
+      <Radio.Group
+        value={days.all}
+        name="daysRadioGroup"
+        onChange={value => {
+          if (typeof value === 'boolean' && value) {
+            updateDays(prev => {
+              return {...prev, all: true};
             });
-            updateDuration(value);
-          }}
-        />
-      </Item>
-      <Label style={{margin: 20}}>Days</Label>
-      <ListItem>
-        <CheckBox
-          checked={days.all ? true : false}
-          onPress={() => {
-            updateDays({day: '', all: true});
             updateState(prev => {
               const cronState = prev[field].cron.split(' ');
               cronState[4] = '*';
               prev[field].cron = cronState.join(' ');
               return prev;
             });
-          }}
-        />
-        <Body>
-          <Text>Every Day</Text>
-        </Body>
-      </ListItem>
-      <ListItem>
-        <CheckBox
-          checked={days.all ? false : true}
-          onPress={() => {
+          } else if (typeof value === 'boolean' && !value) {
             updateDays(prev => {
               return {...prev, all: false};
             });
-          }}
-        />
-        <Body style={{marginLeft: 10}}>
-          <Item>
-            <Input
-              disabled={days.all ? true : false}
-              placeholder="sun, mon, tue, wed, thu, fri, sat"
-              value={days.day}
-              onChangeText={value => {
-                updateDays(prev => {
-                  return {...prev, day: value};
+          }
+        }}>
+        <Radio value={true} my={1} accessibilityLabel="Every Days">
+          Every Day
+        </Radio>
+        <Radio
+          value={false}
+          my={1}
+          accessibilityLabel="Specify days to trigger (ie.">
+          <Input
+            ml={2}
+            variant="underlined"
+            placeholder="sun, mon, tue, wed, thu, fri, sat"
+            value={days.day}
+            isDisabled={days.all}
+            onChangeText={value => {
+              updateDays(prev => {
+                return {...prev, day: value};
+              });
+              updateState(prev => {
+                const cronState = prev[field].cron.split(' ');
+                const newCronState = value
+                  .toLowerCase()
+                  .replaceAll(' ', '')
+                  .split(',');
+                let newCronString = '';
+                newCronState.map(element => {
+                  if (element === 'mon') {
+                    newCronString += '1,';
+                  } else if (element === 'tue') {
+                    newCronString += '2,';
+                  } else if (element === 'wed') {
+                    newCronString += '3,';
+                  } else if (element === 'thu') {
+                    newCronString += '4,';
+                  } else if (element === 'fri') {
+                    newCronString += '5,';
+                  } else if (element === 'sat') {
+                    newCronString += '6,';
+                  } else if (element === 'sun') {
+                    newCronString += '7,';
+                  }
                 });
-                updateState(prev => {
-                  const cronState = prev[field].cron.split(' ');
-                  const newCronState = value
-                    .toLowerCase()
-                    .replaceAll(' ', '')
-                    .split(',');
-                  let newCronString = '';
-                  newCronState.map(element => {
-                    if (element === 'mon') {
-                      newCronString += '1,';
-                    } else if (element === 'tue') {
-                      newCronString += '2,';
-                    } else if (element === 'wed') {
-                      newCronString += '3,';
-                    } else if (element === 'thu') {
-                      newCronString += '4,';
-                    } else if (element === 'fri') {
-                      newCronString += '5,';
-                    } else if (element === 'sat') {
-                      newCronString += '6,';
-                    } else if (element === 'sun') {
-                      newCronString += '7,';
-                    }
-                  });
-                  newCronString = newCronString.slice(0, -1);
-                  cronState[4] = newCronString;
-                  prev[field].cron = cronState.join(' ');
-                  return prev;
-                });
-              }}
-            />
-          </Item>
-        </Body>
-      </ListItem>
-      <Label style={{margin: 20}}>times</Label>
-      <ListItem>
-        <CheckBox
-          checked={times.all ? true : false}
-          onPress={() => {
+                newCronString = newCronString.slice(0, -1);
+                cronState[4] = newCronString;
+                prev[field].cron = cronState.join(' ');
+                return prev;
+              });
+            }}
+          />
+        </Radio>
+      </Radio.Group>
+      <Box my={2} />
+
+      <Text _text={{color: 'muted.700'}} mt={2}>
+        Times
+      </Text>
+      <Radio.Group
+        value={times.all}
+        name="daysRadioGroup"
+        onChange={value => {
+          if (typeof value === 'boolean' && value) {
             updateTimes(prev => {
               return {...prev, all: true};
             });
@@ -164,46 +164,42 @@ export const ScheduleInput = ({state, updateState, field}) => {
               prev[field].cron = cronState.join(' ');
               return prev;
             });
-          }}
-        />
-        <Body>
-          <Text>Hourly</Text>
-        </Body>
-      </ListItem>
-      <ListItem>
-        <CheckBox
-          checked={times.all ? false : true}
-          onPress={() => {
+          } else if (typeof value === 'boolean' && !value) {
             updateTimes(prev => {
               return {...prev, all: false};
             });
-          }}
-        />
-        <Body style={{marginLeft: 10}}>
-          <Item>
-            <Input
-              disabled={times.all ? true : false}
-              placeholder="1-24"
-              value={times.time}
-              keyboardType="numeric"
-              onChangeText={value => {
-                updateTimes(prev => {
-                  return {...prev, time: value};
-                });
-                updateState(prev => {
-                  const cronState = prev[field].cron.split(' ');
-                  cronState[3] = value
-                    .toLowerCase()
-                    .replaceAll(' ', '')
-                    .replace(/[a-z]/g, '');
-                  prev[field].cron = cronState.join(' ');
-                  return prev;
-                });
-              }}
-            />
-          </Item>
-        </Body>
-      </ListItem>
-    </Content>
+          }
+        }}>
+        <Radio value={true} my={1} accessibilityLabel="Every Hour">
+          Every Hour
+        </Radio>
+        <Radio
+          value={false}
+          my={1}
+          accessibilityLabel="Specify hour to trigger (ie.">
+          <Input
+            ml={2}
+            variant="underlined"
+            placeholder="1-24                                             "
+            value={times.time}
+            isDisabled={times.all}
+            onChangeText={value => {
+              updateState(prev => {
+                const cronState = prev[field].cron.split(' ');
+                cronState[3] = value
+                  .toLowerCase()
+                  .replaceAll(' ', '')
+                  .replace(/[a-z]/g, '');
+                prev[field].cron = cronState.join(' ');
+                return prev;
+              });
+              updateTimes(prev => {
+                return {...prev, time: value, all: true};
+              });
+            }}
+          />
+        </Radio>
+      </Radio.Group>
+    </Box>
   );
 };

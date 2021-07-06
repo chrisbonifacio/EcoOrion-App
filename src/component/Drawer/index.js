@@ -3,8 +3,9 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {Container, Text} from 'native-base';
+import {Container} from 'native-base';
 import React from 'react';
+
 export const AppDrawer = props => {
   return (
     <Container style={{flex: 1}}>

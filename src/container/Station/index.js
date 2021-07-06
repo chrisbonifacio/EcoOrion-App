@@ -1,11 +1,11 @@
 import {Box} from 'native-base';
 import React from 'react';
 
-import {AppHeader} from '../../component/Header';
-export const AppContainer = ({navigation, children, title}) => {
+import {StationHeader} from '../../component/Header';
+export const StationContainer = ({children, title, backButton}) => {
   return (
     <Box flex={1} safeArea bgColor="green.900">
-      <AppHeader navigation={navigation} title={title} />
+      <StationHeader title={title} backButton={backButton} />
       <Box flex={1} bgColor="green.100">
         {children}
       </Box>
