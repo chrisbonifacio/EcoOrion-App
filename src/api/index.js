@@ -183,6 +183,14 @@ export const ByStationIDAndUserID = async (user_id, station_id) => {
   );
 };
 
+export const ByStationID = async station_id => {
+  return API.graphql(
+    graphqlOperation(queries.stationByStationID, {
+      station_id: station_id,
+    }),
+  );
+};
+
 export const stationDataByStationID = async station_id => {
   return API.graphql(
     graphqlOperation(

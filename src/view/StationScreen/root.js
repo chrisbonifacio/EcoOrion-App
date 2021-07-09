@@ -3,7 +3,7 @@ import {Auth} from 'aws-amplify';
 import {Box, Spacer, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 
-import {stationByUserID} from '../../api';
+import {listStations, stationByUserID} from '../../api';
 import {DefaultButton} from '../../component/Button';
 import {AppContainer} from '../../container/App';
 export const StationRoot = ({navigation}) => {
@@ -11,16 +11,27 @@ export const StationRoot = ({navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       Auth.currentAuthenticatedUser().then(async user => {
-        const getStation = await stationByUserID(user.attributes.email);
-        if (getStation.data.StationByUserID.items.length > 0) {
+        const getStation = await listStations();
+        if (getStation.data.listStations.items.length > 0) {
           let newStations = [];
-          getStation.data.StationByUserID.items.forEach(element => {
+          getStation.data.listStations.items.forEach(element => {
             newStations.push(element);
           });
           updateStations(() => {
             return newStations;
           });
         }
+
+        // const getStation = await stationByUserID(user.attributes.email);
+        // if (getStation.data.StationByUserID.items.length > 0) {
+        //   let newStations = [];
+        //   getStation.data.StationByUserID.items.forEach(element => {
+        //     newStations.push(element);
+        //   });
+        //   updateStations(() => {
+        //     return newStations;
+        //   });
+        // }
       });
       // const unsubscribe = API.subscribe(userId, user => setUser(user));
       // return () => unsubscribe();

@@ -3,7 +3,7 @@ import {Box, KeyboardAvoidingView, ScrollView, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 
-import {ByStationIDAndUserID, createStation, updateStation} from '../../api';
+import {ByStationID, createStation, updateStation} from '../../api';
 import {DefaultButton} from '../../component/Button';
 import {ScheduleInput} from '../../component/Form/Scheduler';
 import {TextInput} from '../../component/Form/TextInput';
@@ -34,13 +34,10 @@ export const StationDetail = ({navigation, route}) => {
         };
       });
       try {
-        const res = await ByStationIDAndUserID(
-          user_email,
-          route.params.stationID,
-        );
-        if (res.data.StationByStationIDAndUserID.items.length > 0) {
+        const res = await ByStationID(route.params.stationID);
+        if (res.data.StationByStationID.items.length > 0) {
           updateCreate(false);
-          const dataLoaded = res.data.StationByStationIDAndUserID.items[0];
+          const dataLoaded = res.data.StationByStationID.items[0];
           updateState(prevState => {
             return {
               ...prevState,
