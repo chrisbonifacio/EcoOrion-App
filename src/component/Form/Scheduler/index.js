@@ -1,4 +1,4 @@
-import {Box, Input, Radio, Text} from 'native-base';
+import {Box, FormControl, Input, Radio, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
 
 import {TextInput} from '../TextInput';
@@ -74,7 +74,6 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
       <Text _text={{color: 'muted.700'}} mt={2}>
         Days
       </Text>
-      {days.all}
       <Radio.Group
         value={days.all}
         name="daysRadioGroup"
@@ -102,49 +101,55 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
           value={false}
           my={1}
           accessibilityLabel="Specify days to trigger (ie.">
-          <Input
-            ml={2}
-            variant="underlined"
-            placeholder="sun, mon, tue, wed, thu, fri, sat"
-            value={days.day}
-            isDisabled={days.all}
-            onChangeText={value => {
-              updateDays(prev => {
-                return {...prev, day: value};
-              });
-              updateState(prev => {
-                const cronState = prev[field].cron.split(' ');
-                const newCronState = value
-                  .toLowerCase()
-                  .replaceAll(' ', '')
-                  .split(',');
-                let newCronString = '';
-                newCronState.map(element => {
-                  if (element === 'mon') {
-                    newCronString += '1,';
-                  } else if (element === 'tue') {
-                    newCronString += '2,';
-                  } else if (element === 'wed') {
-                    newCronString += '3,';
-                  } else if (element === 'thu') {
-                    newCronString += '4,';
-                  } else if (element === 'fri') {
-                    newCronString += '5,';
-                  } else if (element === 'sat') {
-                    newCronString += '6,';
-                  } else if (element === 'sun') {
-                    newCronString += '7,';
-                  }
-                });
-                newCronString = newCronString.slice(0, -1);
-                cronState[4] = newCronString;
-                prev[field].cron = cronState.join(' ');
-                return prev;
-              });
-            }}
-          />
+          Custom
         </Radio>
       </Radio.Group>
+
+      <FormControl>
+        <Input
+          ml={2}
+          isFullWidth
+          variant="underlined"
+          placeholder="sun, mon, tue, wed, thu, fri, sat"
+          value={days.day}
+          isDisabled={days.all}
+          onChangeText={value => {
+            updateDays(prev => {
+              return {...prev, day: value};
+            });
+            updateState(prev => {
+              const cronState = prev[field].cron.split(' ');
+              let newCronState = value
+                .toLowerCase()
+                .replace(/\s/g, '')
+                .split(',');
+              newCronState = [...new Set(newCronState)];
+              let newCronString = '';
+              newCronState.map(element => {
+                if (element === 'mon') {
+                  newCronString += '1,';
+                } else if (element === 'tue') {
+                  newCronString += '2,';
+                } else if (element === 'wed') {
+                  newCronString += '3,';
+                } else if (element === 'thu') {
+                  newCronString += '4,';
+                } else if (element === 'fri') {
+                  newCronString += '5,';
+                } else if (element === 'sat') {
+                  newCronString += '6,';
+                } else if (element === 'sun') {
+                  newCronString += '7,';
+                }
+              });
+              newCronString = newCronString.slice(0, -1);
+              cronState[4] = newCronString;
+              prev[field].cron = cronState.join(' ');
+              return prev;
+            });
+          }}
+        />
+      </FormControl>
       <Box my={2} />
 
       <Text _text={{color: 'muted.700'}} mt={2}>
@@ -177,29 +182,40 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
           value={false}
           my={1}
           accessibilityLabel="Specify hour to trigger (ie.">
-          <Input
-            ml={2}
-            variant="underlined"
-            placeholder="1-24                                             "
-            value={times.time}
-            isDisabled={times.all}
-            onChangeText={value => {
-              updateState(prev => {
-                const cronState = prev[field].cron.split(' ');
-                cronState[3] = value
-                  .toLowerCase()
-                  .replaceAll(' ', '')
-                  .replace(/[a-z]/g, '');
-                prev[field].cron = cronState.join(' ');
-                return prev;
-              });
-              updateTimes(prev => {
-                return {...prev, time: value, all: true};
-              });
-            }}
-          />
+          Custom
         </Radio>
       </Radio.Group>
+      <FormControl>
+        <Input
+          ml={2}
+          isFullWidth
+          variant="underlined"
+          placeholder="1-24                                             "
+          value={times.time}
+          isDisabled={times.all}
+          onChangeText={value => {
+            const value_array = value
+              .toLowerCase()
+              .replace(/\s/g, '')
+              .replace(/[a-z]/g, '')
+              .split(',')
+              .filter(val => {
+                if (val >= 0 && val <= 24) {
+                  return val;
+                }
+              });
+            updateState(prev => {
+              const cronState = prev[field].cron.split(' ');
+              cronState[3] = [...new Set(value_array)];
+              prev[field].cron = cronState.join(' ');
+              return prev;
+            });
+            updateTimes(prev => {
+              return {...prev, time: value};
+            });
+          }}
+        />
+      </FormControl>
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 import {Auth} from 'aws-amplify';
 import {Box, KeyboardAvoidingView, ScrollView, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 import {ByStationIDAndUserID, createStation, updateStation} from '../../api';
 import {DefaultButton} from '../../component/Button';
@@ -122,7 +122,9 @@ export const StationDetail = ({navigation, route}) => {
       backButton={() => {
         navigation.navigate('Station', {screen: 'StationRoot'});
       }}>
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={120}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={60}>
         <ScrollView>
           <Box my={2} mx={4}>
             <Text bold fontSize="lg">

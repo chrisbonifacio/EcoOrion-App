@@ -1,7 +1,8 @@
-import {Box, Center, FormControl, Heading, Input, VStack} from 'native-base';
+import {Box, Center, Heading, VStack} from 'native-base';
 import React, {useState} from 'react';
 
 import {DefaultButton} from '../../component/Button';
+import {TextInput} from '../../component/Form/TextInput';
 import {StationContainer} from '../../container/Station';
 
 export const StationCreate = ({navigation}) => {
@@ -18,15 +19,13 @@ export const StationCreate = ({navigation}) => {
             <Heading>Create Station</Heading>
           </Center>
         </Box>
-        <FormControl>
-          <Box margin={5}>
-            <FormControl.Label>Station ID</FormControl.Label>
-            <Input
-              value={stationID}
-              onChangeText={value => updateStationID(value)}
-            />
-          </Box>
-        </FormControl>
+        <TextInput
+          title="Station ID"
+          triggerFunction={value => {
+            updateStationID(value);
+          }}
+          value={stationID}
+        />
       </VStack>
       <DefaultButton
         title="Continue"

@@ -8,7 +8,7 @@ import {
   VStack,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 import {createProfile, getProfile} from '../../api';
 import {DefaultButton} from '../../component/Button';
@@ -80,7 +80,9 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
   };
   return (
     <Box flex={1} bgColor="green.100">
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={120}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={60}>
         <ScrollView my={4} mx={4}>
           <VStack space={6}>
             <Center>

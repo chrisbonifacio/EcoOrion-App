@@ -13,7 +13,6 @@ export const ProfileCreationCheck = ({children}) => {
     const getProfileFunction = async email => {
       const user = await Auth.currentAuthenticatedUser();
       const res = await getProfile(user.attributes.email);
-      console.log()
       updateProfile(prev => {
         return {...prev, ...res.data.getProfile};
       });

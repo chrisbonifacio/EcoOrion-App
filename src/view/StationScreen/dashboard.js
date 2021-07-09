@@ -8,7 +8,7 @@ import {
   Text,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 import {stationDataByStationID} from '../../api';
 import {DefaultButton} from '../../component/Button';
@@ -33,12 +33,12 @@ export const StationDashboard = ({navigation, route}) => {
           route.params.station.station_id,
         );
         if (res.data.StationDataByStationID.items.length > 0) {
-          const sensorData = JSON.parse(
-            res.data.StationDataByStationID.items[0].station_data.replaceAll(
-              "'",
+          const resData =
+            res.data.StationDataByStationID.items[0].station_data.replace(
+              /'/g,
               '"',
-            ),
-          );
+            );
+          const sensorData = JSON.parse(resData);
           updateStationData({...sensorData});
         }
       } catch (err) {
@@ -86,7 +86,9 @@ export const StationDashboard = ({navigation, route}) => {
       backButton={() => {
         navigation.navigate('Station', {screen: 'StationRoot'});
       }}>
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={120}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={60}>
         <ScrollView>
           <Box
             border={1}
@@ -152,7 +154,9 @@ export const StationDashboard = ({navigation, route}) => {
               title="Watering Duration(Second)"
               triggerFunction={value => {
                 updateWater(
-                  isNaN(value) || value === '' ? 0 : parseInt(value, 10),
+                  isNaN(value) || value === '' || parseInt(value, 10) > 24
+                    ? 0
+                    : parseInt(value, 10),
                 );
               }}
               value={water.toString()}
@@ -171,7 +175,9 @@ export const StationDashboard = ({navigation, route}) => {
               title="Fertilizer Duration(Second)"
               triggerFunction={value => {
                 updateFertilizer(
-                  isNaN(value) || value === '' ? 0 : parseInt(value, 10),
+                  isNaN(value) || value === '' || parseInt(value, 10) > 24
+                    ? 0
+                    : parseInt(value, 10),
                 );
               }}
               value={fertilizer.toString()}

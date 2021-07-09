@@ -9,7 +9,7 @@
     "amplify/backend/awscloudformation": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll": true 
+    "source.fixAll": true
   },
   "editor.formatOnSave": true
 }
