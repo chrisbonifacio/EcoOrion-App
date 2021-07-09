@@ -3,7 +3,7 @@ import {Auth} from 'aws-amplify';
 import {Box, Spacer, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 
-import {listStations, stationByUserID} from '../../api';
+import {listStations} from '../../api';
 import {DefaultButton} from '../../component/Button';
 import {AppContainer} from '../../container/App';
 export const StationRoot = ({navigation}) => {

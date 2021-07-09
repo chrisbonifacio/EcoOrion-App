@@ -75,7 +75,8 @@ export const StationDashboard = ({navigation, route}) => {
         type: type,
         duration: type === 'water' ? water : fertilizer,
       },
-    ).then(() => {
+    ).then(res => {
+      console.log(res);
       Alert.alert('Triggered', 'Triggered Successfully');
     });
   };

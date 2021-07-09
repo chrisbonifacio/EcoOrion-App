@@ -26,7 +26,7 @@ export const StationDetail = ({navigation, route}) => {
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then(async user => {
-      const user_email = user.attributes.email;
+      // const user_email = user.attributes.email;
       updateState(prevState => {
         return {
           ...prevState,
