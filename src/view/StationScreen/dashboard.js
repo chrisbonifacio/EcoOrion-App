@@ -154,7 +154,7 @@ export const StationDashboard = ({navigation, route}) => {
               title="Watering Duration(Second)"
               triggerFunction={value => {
                 updateWater(
-                  isNaN(value) || value === '' || parseInt(value, 10) > 24
+                  isNaN(value) || value === '' || parseInt(value, 10) <= 0
                     ? 0
                     : parseInt(value, 10),
                 );
@@ -175,7 +175,7 @@ export const StationDashboard = ({navigation, route}) => {
               title="Fertilizer Duration(Second)"
               triggerFunction={value => {
                 updateFertilizer(
-                  isNaN(value) || value === '' || parseInt(value, 10) > 24
+                  isNaN(value) || value === '' || parseInt(value, 10) <= 0
                     ? 0
                     : parseInt(value, 10),
                 );
