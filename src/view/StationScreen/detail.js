@@ -1,4 +1,4 @@
-import {Auth} from 'aws-amplify';
+import {Auth, PubSub} from 'aws-amplify';
 import {Box, KeyboardAvoidingView, ScrollView, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
@@ -8,6 +8,7 @@ import {DefaultButton} from '../../component/Button';
 import {ScheduleInput} from '../../component/Form/Scheduler';
 import {TextInput} from '../../component/Form/TextInput';
 import {StationContainer} from '../../container/Station';
+
 export const StationDetail = ({navigation, route}) => {
   const [create, updateCreate] = useState(route.params.create);
   const [state, updateState] = useState({
@@ -95,16 +96,24 @@ export const StationDetail = ({navigation, route}) => {
           ...state,
         });
         if (res.data) {
-          Alert.alert('Created', 'Station has been created', [
+          PubSub.publish(
+            'device/' + route.params.station.station_id + '/setting',
             {
-              text: 'OK',
-              onPress: () => {
-                navigation.navigate('Station', {
-                  screen: 'StationRoot',
-                });
-              },
+              ...state,
             },
-          ]);
+          ).then(pub => {
+            console.log(pub);
+            Alert.alert('Updated', 'Station has been update successfully', [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.navigate('Station', {
+                    screen: 'StationRoot',
+                  });
+                },
+              },
+            ]);
+          });
         }
       } catch (err) {
         console.log(err);
