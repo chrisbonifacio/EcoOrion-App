@@ -1,4 +1,4 @@
-import {Auth} from 'aws-amplify';
+import {API, Auth} from 'aws-amplify';
 import {
   Box,
   Center,
@@ -29,7 +29,33 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
   useEffect(() => {
     const getSettingsFunction = async email => {
       const user = await Auth.currentAuthenticatedUser();
-      // const res = await getProfile(user.attributes.email);
+
+      Auth.currentCredentials().then(async info => {
+        const test = await Auth.currentSession();
+        console.log(test.getIdToken().getJwtToken());
+        const apiName = 'EcoOrionRestApi';
+        const path = '/iot';
+        const requestBody = {
+          headers: {
+            Authorization: `${(await Auth.currentSession())
+              .getIdToken()
+              .getJwtToken()}`,
+          },
+          body: {
+            identityId: info.identityId,
+          },
+        };
+
+        API.post(apiName, path, requestBody)
+          .then(response => {
+            console.log(response);
+            // Add your code here
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+
       const res = await getProfile(user.attributes.email);
       updateSettings(prev => {
         return {...prev, ...res.data.getProfile, email: user.attributes.email};
