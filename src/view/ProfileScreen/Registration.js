@@ -31,8 +31,6 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
       const user = await Auth.currentAuthenticatedUser();
 
       Auth.currentCredentials().then(async info => {
-        const test = await Auth.currentSession();
-        console.log(test.getIdToken().getJwtToken());
         const apiName = 'EcoOrionRestApi';
         const path = '/iot';
         const requestBody = {
@@ -76,8 +74,6 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
       settings.email === '' ||
       settings.phone === '' ||
       settings.address_1 === '' ||
-      settings.address_2 === '' ||
-      settings.address_3 === '' ||
       settings.city === '' ||
       settings.state === '' ||
       settings.postcode === ''
