@@ -8,6 +8,7 @@ import {DefaultButton} from '../../component/Button';
 import {AppContainer} from '../../container/App';
 export const StationRoot = ({navigation}) => {
   const [stations, updateStations] = useState([]);
+  let index = 0;
   useFocusEffect(
     React.useCallback(() => {
       Auth.currentAuthenticatedUser().then(async user => {
@@ -58,9 +59,10 @@ export const StationRoot = ({navigation}) => {
         <Spacer flex={1} />
         <Box margin={3}>
           {stations.map(station => {
+            index += 1;
             return (
               <DefaultButton
-                key={station.station_id}
+                key={station.station_id + '_' + index}
                 title={station.station_name}
                 triggerFunction={() =>
                   navigation.navigate('Station', {

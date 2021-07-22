@@ -1,4 +1,4 @@
-import {PubSub} from 'aws-amplify';
+import {Auth, PubSub} from 'aws-amplify';
 import {
   Box,
   Center,

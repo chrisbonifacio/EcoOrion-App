@@ -31,27 +31,47 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
       const user = await Auth.currentAuthenticatedUser();
 
       Auth.currentCredentials().then(async info => {
-        const apiName = 'EcoOrionRestApi';
-        const path = '/iot';
-        const requestBody = {
-          headers: {
-            Authorization: `${(await Auth.currentSession())
-              .getIdToken()
-              .getJwtToken()}`,
+        const cognitoIdentityId = info.identityId;
+        const AWS = require('aws-sdk');
+        AWS.config.update({
+          region: 'ap-southeast-1',
+          credentials: {
+            secretAccessKey: 'bUEksdOEWf5xTJ2zceXwNr+aJ9DM2HcNCCNexhMm',
+            accessKeyId: 'AKIARFZ7QUWYQKZIEVML',
           },
-          body: {
-            identityId: info.identityId,
-          },
+        });
+        const iot = new AWS.Iot();
+        const params = {
+          policyName: 'EcoOrionIOTPolicy',
+          principal: cognitoIdentityId,
         };
-
-        API.post(apiName, path, requestBody)
-          .then(response => {
-            console.log(response);
-            // Add your code here
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        iot.attachPrincipalPolicy(params, (err, data) => {
+          console.log(err);
+          console.log(data);
+        });
+        // const apiName = 'EcoOrionRestApi';
+        // const path = '/iot';
+        // const requestBody = {
+        //   headers: {
+        //     Authorization: `${(await Auth.currentSession())
+        //       .getIdToken()
+        //       .getJwtToken()}`,
+        //   },
+        //   body: JSON.parse(
+        //     JSON.stringify({
+        //       identityId: info.identityId,
+        //     }),
+        //   ),
+        // };
+        // API.post(apiName, path, requestBody)
+        //   .then(response => {
+        //     console.log(response);
+        //     // Add your code here
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   });
+        // // End
       });
 
       const res = await getProfile(user.attributes.email);
