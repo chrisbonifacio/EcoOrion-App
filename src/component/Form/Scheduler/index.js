@@ -44,11 +44,11 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
     updateTimes(prev => {
       return {
         ...prev,
-        all: state[field].cron.split(' ')[3] === '*' ? true : false,
+        all: state[field].cron.split(' ')[1] === '*' ? true : false,
         time:
-          state[field].cron.split(' ')[3] === '*'
+          state[field].cron.split(' ')[1] === '*'
             ? ''
-            : state[field].cron.split(' ')[3],
+            : state[field].cron.split(' ')[1],
       };
     });
   }, [state, field]);
@@ -165,7 +165,7 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
             });
             updateState(prev => {
               const cronState = prev[field].cron.split(' ');
-              cronState[3] = '*';
+              cronState[1] = '*';
               prev[field].cron = cronState.join(' ');
               return prev;
             });
@@ -206,7 +206,7 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
               });
             updateState(prev => {
               const cronState = prev[field].cron.split(' ');
-              cronState[3] = [...new Set(value_array)];
+              cronState[1] = [...new Set(value_array)];
               prev[field].cron = cronState.join(' ');
               return prev;
             });
