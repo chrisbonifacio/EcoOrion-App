@@ -39,7 +39,10 @@ export const StationDashboard = ({navigation, route}) => {
               '"',
             );
           const sensorData = JSON.parse(resData);
-          updateStationData({...sensorData});
+          updateStationData({
+            ...sensorData,
+            time: res.data.StationDataByStationID.items[0].createdAt,
+          });
         }
       } catch (err) {
         console.log(err);
