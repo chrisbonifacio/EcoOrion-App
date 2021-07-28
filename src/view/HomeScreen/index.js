@@ -18,7 +18,7 @@ export const HomeScreen = ({navigation}) => {
           shadow={9}>
           <Box px={8} my={16}>
             <Text bold color="white" fontSize="xl">
-              Welcome to Eco-Orion 1m2 Farmer's app
+              Welcome to Eco-Orion 1m&#178; Farmer's app
             </Text>
           </Box>
         </Box>
