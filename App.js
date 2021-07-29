@@ -9,7 +9,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {withAuthenticator} from 'aws-amplify-react-native';
 import {NativeBaseProvider} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
+import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 
@@ -18,6 +19,9 @@ import {store} from './src/redux/store';
 import {RouteContainer} from './src/route';
 
 const App = () => {
+  useEffect(() => {
+    RNBootSplash.hide({fade: true});
+  });
   return (
     <Provider store={store}>
       <SafeAreaProvider>
