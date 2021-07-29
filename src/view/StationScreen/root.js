@@ -1,9 +1,10 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
-import {Box, Spacer, Text, VStack} from 'native-base';
+import {Box, Image, Spacer, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 
 import {listStations} from '../../api';
+import StationImage from '../../assets/station.jpg';
 import {DefaultButton} from '../../component/Button';
 import {AppContainer} from '../../container/App';
 export const StationRoot = ({navigation}) => {
@@ -54,6 +55,7 @@ export const StationRoot = ({navigation}) => {
             <Text bold color="white" fontSize="3xl">
               Stations
             </Text>
+            <Image source={StationImage} size={'xl'} />
           </Box>
         </Box>
         <Spacer flex={1} />

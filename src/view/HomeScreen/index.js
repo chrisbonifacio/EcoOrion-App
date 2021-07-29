@@ -21,6 +21,11 @@ export const HomeScreen = ({navigation}) => {
               Welcome to Eco-Orion 1m&#178; Farmer's app
             </Text>
           </Box>
+          <Box px={8} mb={16}>
+            <Text bold color="white" fontSize="3xl">
+              Growing your own food from home.
+            </Text>
+          </Box>
         </Box>
 
         <Spacer flex={1} />
