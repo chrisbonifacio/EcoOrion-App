@@ -51,11 +51,11 @@ export const StationRoot = ({navigation}) => {
           mx={4}
           bgColor="green.800"
           shadow={9}>
-          <Box px={8} my={16}>
+          <Box px={16} my={16}>
             <Text bold color="white" fontSize="3xl">
               Stations
             </Text>
-            <Image source={StationImage} size={'xl'} />
+            <Image source={StationImage} size={'xl'} alt="Station Iamge" />
           </Box>
         </Box>
         <Spacer flex={1} />
