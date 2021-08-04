@@ -4,7 +4,7 @@ import React from 'react';
 export const DefaultButton = ({triggerFunction, title}) => {
   return (
     <Box my={4} mx={4}>
-      <Button colorScheme="teal" onPress={triggerFunction}>
+      <Button bgColor="default.primary" onPress={triggerFunction}>
         <Text color="white" bold fontSize="lg">
           {title}
         </Text>

@@ -54,7 +54,7 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
   }, [state, field]);
   return (
     <Box>
-      <Text bold fontSize="lg" mt={4} mb={2}>
+      <Text color="white" bold fontSize="lg" mt={4} mb={2}>
         {title}
       </Text>
 
@@ -71,7 +71,7 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
       />
 
       <Box my={2} />
-      <Text _text={{color: 'muted.700'}} mt={2}>
+      <Text color="white" mt={2}>
         Days
       </Text>
       <Radio.Group
@@ -95,24 +95,36 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
           }
         }}>
         <Radio value={true} my={1} accessibilityLabel="Every Days">
-          Every Day
+          <Text color="white" ml="4">
+            Every Day
+          </Text>
         </Radio>
         <Radio
           value={false}
           my={1}
           accessibilityLabel="Specify days to trigger (ie.">
-          Custom
+          <Text color="white" ml="4">
+            Custom
+          </Text>
         </Radio>
       </Radio.Group>
 
       <FormControl>
         <Input
+          style={{color: '#FFF'}}
+          _focus={{
+            color: 'white',
+          }}
           ml={2}
           isFullWidth
           variant="underlined"
           placeholder="sun, mon, tue, wed, thu, fri, sat"
           value={days.day}
           isDisabled={days.all}
+          _disabled={{
+            bgColor: 'gray.700',
+            color: 'white',
+          }}
           onChangeText={value => {
             updateDays(prev => {
               return {...prev, day: value};
@@ -152,7 +164,7 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
       </FormControl>
       <Box my={2} />
 
-      <Text _text={{color: 'muted.700'}} mt={2}>
+      <Text color="white" mt={2}>
         Times
       </Text>
       <Radio.Group
@@ -175,24 +187,40 @@ export const ScheduleInput = ({state, updateState, field, title}) => {
             });
           }
         }}>
-        <Radio value={true} my={1} accessibilityLabel="Every Hour">
-          Every Hour
+        <Radio
+          value={true}
+          my={1}
+          accessibilityLabel="Every Hour"
+          style={{color: '#FFF'}}>
+          <Text color="white" ml="4">
+            Every Hour
+          </Text>
         </Radio>
         <Radio
           value={false}
           my={1}
           accessibilityLabel="Specify hour to trigger (ie.">
-          Custom
+          <Text color="white" ml="4">
+            Custom
+          </Text>
         </Radio>
       </Radio.Group>
       <FormControl>
         <Input
+          style={{color: '#FFF'}}
+          _focus={{
+            color: 'white',
+          }}
           ml={2}
           isFullWidth
           variant="underlined"
           placeholder="1-24                                             "
           value={times.time}
           isDisabled={times.all}
+          _disabled={{
+            bgColor: 'gray.700',
+            color: 'white',
+          }}
           onChangeText={value => {
             const value_array = value
               .toLowerCase()

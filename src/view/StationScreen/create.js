@@ -16,7 +16,7 @@ export const StationCreate = ({navigation}) => {
       <VStack>
         <Box margin={3}>
           <Center>
-            <Heading>Create Station</Heading>
+            <Heading color="default.primary">Create Station</Heading>
           </Center>
         </Box>
         <TextInput

@@ -133,7 +133,7 @@ export const StationDetail = ({navigation, route}) => {
         keyboardVerticalOffset={60}>
         <ScrollView>
           <Box my={2} mx={4}>
-            <Text bold fontSize="lg">
+            <Text color="white" bold fontSize="lg">
               {create ? 'Station Creating: ' : 'Station Details: '}
               {state.station_id}
             </Text>

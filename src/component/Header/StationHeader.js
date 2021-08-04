@@ -7,11 +7,11 @@ export const StationHeader = ({title, backButton}) => {
       justifyContent="space-between"
       alignItems="center"
       alignContent="center"
-      bgColor="green.900">
-      <Button variant="ghost" color="white" onPress={backButton}>
-        <ArrowBackIcon color="white" />
+      bgColor="default.bglight">
+      <Button variant="ghost" color="default.primary" onPress={backButton}>
+        <ArrowBackIcon color="default.primary" />
       </Button>
-      <Heading color="white">{title ? title : 'Header'}</Heading>
+      <Heading color="default.primary">{title ? title : 'Header'}</Heading>
       <Box mx={8} />
     </HStack>
   );

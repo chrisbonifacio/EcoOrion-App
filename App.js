@@ -17,6 +17,7 @@ import {Provider} from 'react-redux';
 import {ProfileCreationCheck} from './src/hook/ProfileCreationCheck';
 import {store} from './src/redux/store';
 import {RouteContainer} from './src/route';
+import {theme} from './src/themes';
 
 const App = () => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
           <NavigationContainer>
             <ProfileCreationCheck>
               <RouteContainer />

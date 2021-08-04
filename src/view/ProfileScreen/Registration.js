@@ -103,14 +103,14 @@ export const ProfileRegistration = ({navigation, profile, updateProfile}) => {
     }
   };
   return (
-    <Box flex={1} bgColor="green.100">
+    <Box flex={1} bgColor="default.secondary">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={60}>
         <ScrollView my={4} mx={4}>
           <VStack space={6}>
             <Center>
-              <Heading>Profile Settings</Heading>
+              <Heading color="default.primary">Profile Settings</Heading>
             </Center>
             <TextInput
               title="Name"

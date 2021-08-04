@@ -86,7 +86,7 @@ export const SettingScreen = ({navigation}) => {
         <ScrollView my={4} mx={4}>
           <VStack space={6}>
             <Center>
-              <Heading>Profile Settings</Heading>
+              <Heading color="default.primary">Profile Settings</Heading>
             </Center>
             <TextInput
               title="Name"

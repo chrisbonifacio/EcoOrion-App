@@ -49,7 +49,7 @@ export const StationRoot = ({navigation}) => {
           alignSelf="center"
           my={8}
           mx={4}
-          bgColor="green.800"
+          bgColor="default.primary"
           shadow={9}>
           <Box px={16} my={16}>
             <Text bold color="white" fontSize="3xl">

@@ -101,7 +101,7 @@ export const StationDashboard = ({navigation, route}) => {
             alignSelf="center"
             my={6}
             mx={2}
-            bgColor="green.800"
+            bgColor="default.primary"
             shadow={9}
             width="90%">
             <Box px={4} my={8}>
@@ -151,11 +151,12 @@ export const StationDashboard = ({navigation, route}) => {
             }}
           />
           <Center mt={4}>
-            <Heading>Station Triggers</Heading>
+            <Heading color="default.primary">Station Triggers</Heading>
           </Center>
           <Box my={4} mx={4}>
             <TextInput
               title="Watering Duration(Second)"
+              text="white"
               triggerFunction={value => {
                 updateWater(
                   isNaN(value) || value === '' || parseInt(value, 10) <= 0

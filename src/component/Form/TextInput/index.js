@@ -4,13 +4,30 @@ import React from 'react';
 export const TextInput = ({value, triggerFunction, title, disabled}) => {
   return (
     <FormControl>
-      <FormControl.Label _text={{color: 'muted.700'}}>
-        {title}
-      </FormControl.Label>
+      <FormControl.Label _text={{color: 'white'}}>{title}</FormControl.Label>
       {disabled ? (
-        <Input value={value} isDisabled onChangeText={triggerFunction} />
+        <Input
+          style={{color: '#FFF'}}
+          _focus={{
+            color: 'white',
+          }}
+          _disabled={{
+            bgColor: 'gray.700',
+            color: 'white',
+          }}
+          value={value}
+          isDisabled
+          onChangeText={triggerFunction}
+        />
       ) : (
-        <Input value={value} onChangeText={triggerFunction} />
+        <Input
+          style={{color: '#FFF'}}
+          _focus={{
+            color: 'white',
+          }}
+          value={value}
+          onChangeText={triggerFunction}
+        />
       )}
     </FormControl>
   );
