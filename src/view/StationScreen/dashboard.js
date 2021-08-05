@@ -24,6 +24,7 @@ export const StationDashboard = ({navigation, route}) => {
     soil_moisture: '',
     rain_percentage: '',
     humidity_level: '',
+    temperature: '',
   });
 
   useEffect(() => {
@@ -134,6 +135,9 @@ export const StationDashboard = ({navigation, route}) => {
               </Text>
               <Text bold color="white">
                 Station Time: {stationData.time}
+              </Text>
+              <Text bold color="white">
+                Station Temperature: {stationData.temperature}
               </Text>
             </Box>
           </Box>

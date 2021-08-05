@@ -1,9 +1,18 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {Auth} from 'aws-amplify';
-import {Box, Image, Spacer, Text, VStack} from 'native-base';
+import {
+  Box,
+  Center,
+  Image,
+  ScrollView,
+  Spacer,
+  Text,
+  VStack,
+} from 'native-base';
 import React, {useState} from 'react';
 
 import {listStations} from '../../api';
+import Logo from '../../assets/logo.png';
 import StationImage from '../../assets/station.jpg';
 import {DefaultButton} from '../../component/Button';
 import {AppContainer} from '../../container/App';
@@ -41,52 +50,69 @@ export const StationRoot = ({navigation}) => {
   );
   return (
     <AppContainer navigation={navigation} title="Stations">
-      <VStack flex={1}>
-        <Box
-          border={1}
-          borderRadius="lg"
-          alignItems="center"
-          alignSelf="center"
-          my={8}
-          mx={4}
-          bgColor="default.primary"
-          shadow={9}>
-          <Box px={16} my={16}>
-            <Text bold color="white" fontSize="3xl">
-              Stations
-            </Text>
-            <Image source={StationImage} size={'xl'} alt="Station Iamge" />
+      <ScrollView my={4} mx={4}>
+        <VStack flex={1}>
+          <Box
+            border={1}
+            borderRadius="lg"
+            alignItems="center"
+            alignSelf="center"
+            my={8}
+            mx={4}
+            bgColor="default.primary"
+            shadow={9}>
+            <Box px={8} my={8}>
+              <Center>
+                <Box bg="default.bglight" p={2}>
+                  <Image
+                    source={Logo}
+                    size={'xl'}
+                    alt="Station Iamge"
+                    style={{width: 300, height: 150}}
+                  />
+                </Box>
+                <Text bold color="white" fontSize="3xl">
+                  Stations
+                </Text>
+                <Image
+                  source={StationImage}
+                  size={'xl'}
+                  alt="Station Iamge"
+                  style={{width: 200, height: 200}}
+                />
+              </Center>
+            </Box>
           </Box>
-        </Box>
-        <Spacer flex={1} />
-        <Box margin={3}>
-          {stations.map(station => {
-            index += 1;
-            return (
-              <DefaultButton
-                key={station.station_id + '_' + index}
-                title={station.station_name}
-                triggerFunction={() =>
-                  navigation.navigate('Station', {
-                    screen: 'StationDashboard',
-                    params: {
-                      station: station,
-                    },
-                  })
-                }
-              />
-            );
-          })}
-          <DefaultButton
-            title="Create Station"
-            triggerFunction={() => navigation.navigate('StationCreate')}
-          />
-          <DefaultButton
-            title="Home"
-            triggerFunction={() => navigation.navigate('Home')}
-          />
-        </Box>
-      </VStack>
+          <Spacer flex={1} />
+          <Box margin={3}>
+            {stations.map(station => {
+              index += 1;
+              return (
+                <DefaultButton
+                  key={station.station_id + '_' + index}
+                  title={station.station_name}
+                  triggerFunction={() =>
+                    navigation.navigate('Station', {
+                      screen: 'StationDashboard',
+                      params: {
+                        station: station,
+                      },
+                    })
+                  }
+                />
+              );
+            })}
+            <DefaultButton
+              title="Create Station"
+              triggerFunction={() => navigation.navigate('StationCreate')}
+            />
+            <DefaultButton
+              title="Home"
+              triggerFunction={() => navigation.navigate('Home')}
+            />
+          </Box>
+        </VStack>
+      </ScrollView>
     </AppContainer>
   );
 };
