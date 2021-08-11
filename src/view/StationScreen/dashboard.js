@@ -54,6 +54,7 @@ export const StationDashboard = ({navigation, route}) => {
       `device/${route.params.station.station_id}/data`,
     ).subscribe({
       next: data => {
+        console.log(data.value);
         updateStationData(data.value);
       },
       error: error => console.error(error),
@@ -112,32 +113,35 @@ export const StationDashboard = ({navigation, route}) => {
               <Text bold color="white">
                 Station Humidity Level:{' '}
                 {stationData.humidity_level
-                  ? parseFloat(stationData.humidity_level).toFixed(2)
+                  ? parseFloat(stationData.humidity_level).toFixed(2) + '%RH'
                   : stationData.humidity_level}
               </Text>
               <Text bold color="white">
                 Station Light Intensity:
                 {stationData.light_intensity
-                  ? parseFloat(stationData.light_intensity).toFixed(2)
+                  ? parseFloat(stationData.light_intensity).toFixed(2) + ' HUF'
                   : stationData.light_intensity}
               </Text>
               <Text bold color="white">
                 Station Rain Percentage:
                 {stationData.rain_percentage
-                  ? parseFloat(stationData.rain_percentage).toFixed(2)
+                  ? parseFloat(stationData.rain_percentage).toFixed(2) + '%'
                   : stationData.rain_percentage}
               </Text>
               <Text bold color="white">
                 Station Soil Moisture:
                 {stationData.soil_moisture
-                  ? parseFloat(stationData.soil_moisture).toFixed(2)
+                  ? parseFloat(stationData.soil_moisture).toFixed(2) + '%'
                   : stationData.soil_moisture}
               </Text>
               <Text bold color="white">
-                Station Time: {stationData.time}
+                Station Time: {stationData.time ? stationData.time : ''}
               </Text>
               <Text bold color="white">
-                Station Temperature: {stationData.temperature}
+                Station Temperature:{' '}
+                {stationData.temperature
+                  ? stationData.temperature + '\u00b0' + 'C'
+                  : stationData.temperature}
               </Text>
             </Box>
           </Box>
