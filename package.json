@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "prepare": "husky install",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "lint": "eslint . --cache --fix"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
