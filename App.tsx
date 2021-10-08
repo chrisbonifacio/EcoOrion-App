@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
-import { NativeBaseProvider, Box } from 'native-base';
+import { NativeBaseProvider, Box, ScrollView } from 'native-base';
 import { store, persistor } from './src/redux';
 
 const LoadingMarkup = () => (
@@ -16,18 +16,22 @@ const LoadingMarkup = () => (
     <ActivityIndicator size="large" color="#0000ff" />
   </View>
 );
-export default function App() {
+const App: FunctionComponent = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={<LoadingMarkup />} persistor={persistor}>
         <NavigationContainer>
           <NativeBaseProvider>
-            <Box flex={1} bg="teal.400" safeArea>
-              Hello world
-            </Box>
+            <ScrollView>
+              <Box flex={1} bg="teal.400" safeArea>
+                Hello world
+              </Box>
+            </ScrollView>
           </NativeBaseProvider>
         </NavigationContainer>
       </PersistGate>
     </Provider>
   );
-}
+};
+
+export default App;
