@@ -1,36 +1,40 @@
-import React, { FunctionComponent } from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { NavigationContainer } from '@react-navigation/native';
-import { NativeBaseProvider, Box, ScrollView } from 'native-base';
-import { store, persistor } from './src/redux';
+import { Auth } from 'aws-amplify';
+import * as SplashScreen from 'expo-splash-screen';
+import { Box } from 'native-base';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-const LoadingMarkup = () => (
-  <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-    }}
-  >
-    <ActivityIndicator size="large" color="#0000ff" />
-  </View>
-);
+import { AuthCheck } from './src/hooks/AuthCheck';
+import { resetLoggedIn, resetProfileCreated } from './src/redux/slice/appslice';
+
 const App: FunctionComponent = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const prepareApp = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+      } catch (err) {
+        if (err === 'The user is not authenticated') {
+          dispatch(resetLoggedIn());
+          dispatch(resetProfileCreated());
+        }
+        console.log('Error from prepare App Function');
+        console.log(err === 'The user is not authenticated');
+        console.log('Error from prepare App Function');
+      } finally {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        await SplashScreen.hideAsync();
+      }
+    };
+    prepareApp();
+  }, [dispatch]);
+
   return (
-    <Provider store={store}>
-      <PersistGate loading={<LoadingMarkup />} persistor={persistor}>
-        <NavigationContainer>
-          <NativeBaseProvider>
-            <ScrollView>
-              <Box flex={1} bg="teal.400" safeArea>
-                Hello world
-              </Box>
-            </ScrollView>
-          </NativeBaseProvider>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <AuthCheck>
+      <Box flex={1} bg="teal.400" safeArea>
+        Hello world
+      </Box>
+    </AuthCheck>
   );
 };
 
