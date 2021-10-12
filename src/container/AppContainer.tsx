@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
-const AppContainer = () => {
+export const AppContainer: FunctionComponent = () => {
   return <div />;
 };
-
-export default AppContainer;

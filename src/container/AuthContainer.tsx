@@ -1,21 +1,19 @@
-import { Box, Heading, VStack } from 'native-base';
-import React, { FunctionComponent } from 'react';
+import { Box } from 'native-base';
+import React, { FunctionComponent, ReactNode } from 'react';
+// import { AppHeader } from '../../component/Header';
 
-export const AuthContainer: FunctionComponent = ({ children }) => {
+interface AppContainerProps {
+  children: ReactNode;
+}
+export const AppContainer: FunctionComponent<AppContainerProps> = ({
+  children,
+}) => {
   return (
-    <Box safeArea flex={1} p="2" py="8" w="90%" mx="auto">
-      <Heading size="lg" fontWeight="600" color="coolGray.800">
-        Sign In
-      </Heading>
-      <Heading mt="1" color="coolGray.600" fontWeight="medium" size="xs">
-        Sign in to continue!
-      </Heading>
-
-      <VStack space={3} mt="5">
+    <Box flex={1} safeArea bgColor="default.bglight">
+      {/* <AppHeader navigation={navigation} title={title} /> */}
+      <Box flex={1} bgColor="default.secondary">
         {children}
-      </VStack>
+      </Box>
     </Box>
   );
 };
-
-export default AuthContainer;
