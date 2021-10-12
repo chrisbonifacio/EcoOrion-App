@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import config from './src/aws-exports';
 import { persistor, store } from './src/redux';
+import { theme } from './src/theme';
 
 Amplify.configure(config);
 
@@ -24,7 +25,7 @@ const AppRoot = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-          <NativeBaseProvider>
+          <NativeBaseProvider theme={theme}>
             <App />
           </NativeBaseProvider>
         </NavigationContainer>

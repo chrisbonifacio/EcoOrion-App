@@ -6,7 +6,7 @@ import { AuthContainer } from '../../container';
 export const ForgetPassword: FunctionComponent = () => {
   return (
     <AuthContainer>
-      <Text>Auth Screen</Text>
+      <Text>Forget Password Screen</Text>
     </AuthContainer>
   );
 };

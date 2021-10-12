@@ -1,17 +1,18 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
-import { LoadingComponent } from '../components/Loading';
 import { RootState } from '../redux/store';
 import { AuthRoutes } from '../routes';
 
-export const AuthCheck: FunctionComponent = () => {
-  const isLoading = useSelector((state: RootState) => state.app.isLoading);
-
+interface AuthCheckProps {
+  children: ReactNode;
+}
+export const AuthCheck: FunctionComponent<AuthCheckProps> = ({ children }) => {
+  const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
   return (
     <>
-      {isLoading && <LoadingComponent />}
-      {!isLoading && <AuthRoutes />}
+      {loggedIn && children}
+      {!loggedIn && <AuthRoutes />}
     </>
   );
 };

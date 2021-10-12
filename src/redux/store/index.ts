@@ -15,13 +15,12 @@ import {
 import appReducer from '../slice/appslice';
 import authReducer from '../slice/authSlice';
 import counterReducer from '../slice/counterSlice';
-// persist config obj
-// blacklist a store attribute using it's reducer name. Blacklisted attributes will not persist. (I did not find a way to blacklist specific values)
+
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: AsyncStorage,
-  blacklist: [], // blacklisting a store attribute name, will not persist that store attribute.
+  blacklist: [authReducer], // blacklisting a store attribute name, will not persist that store attribute.
 };
 
 const rootReducer = combineReducers({

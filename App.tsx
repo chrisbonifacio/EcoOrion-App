@@ -5,7 +5,8 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AuthCheck } from './src/hooks/AuthCheck';
-import { resetLoggedIn, resetProfileCreated } from './src/redux/slice/appslice';
+import { resetProfileCreated } from './src/redux/slice/appslice';
+import { resetLoggedIn, setLoggedIn } from './src/redux/slice/authSlice';
 
 const App: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -13,14 +14,14 @@ const App: FunctionComponent = () => {
     const prepareApp = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
+        if (user) {
+          dispatch(setLoggedIn());
+        }
       } catch (err) {
         if (err === 'The user is not authenticated') {
           dispatch(resetLoggedIn());
           dispatch(resetProfileCreated());
         }
-        console.log('Error from prepare App Function');
-        console.log(err === 'The user is not authenticated');
-        console.log('Error from prepare App Function');
       } finally {
         await new Promise(resolve => setTimeout(resolve, 2000));
         await SplashScreen.hideAsync();

@@ -2,16 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface AppState {
   isLoading: boolean;
-  isLoggedIn: boolean;
   profileCreated: boolean;
-  appReady: boolean;
 }
 
 const initialState: AppState = {
   isLoading: false,
-  isLoggedIn: false,
   profileCreated: false,
-  appReady: false,
 };
 
 export const appSlice = createSlice({
@@ -24,23 +20,11 @@ export const appSlice = createSlice({
     finishLoading: state => {
       state.isLoading = false;
     },
-    setLoggedIn: state => {
-      state.isLoggedIn = true;
-    },
-    resetLoggedIn: state => {
-      state.isLoggedIn = false;
-    },
     setProfileCreated: state => {
       state.profileCreated = true;
     },
     resetProfileCreated: state => {
       state.profileCreated = false;
-    },
-    setAppReady: state => {
-      state.appReady = true;
-    },
-    resetAppReady: state => {
-      state.appReady = false;
     },
   },
 });
@@ -49,12 +33,8 @@ export const appSlice = createSlice({
 export const {
   setLoading,
   finishLoading,
-  setLoggedIn,
-  resetLoggedIn,
   setProfileCreated,
   resetProfileCreated,
-  setAppReady,
-  resetAppReady,
 } = appSlice.actions;
 
 export default appSlice.reducer;
