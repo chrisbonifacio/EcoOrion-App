@@ -4,7 +4,7 @@ import { Box } from 'native-base';
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { AuthCheck } from './src/hooks/AuthCheck';
+import { AppMiddleware } from './src/hooks';
 import { resetProfileCreated } from './src/redux/slice/appslice';
 import { resetLoggedIn, setLoggedIn } from './src/redux/slice/authSlice';
 
@@ -31,11 +31,11 @@ const App: FunctionComponent = () => {
   }, [dispatch]);
 
   return (
-    <AuthCheck>
+    <AppMiddleware>
       <Box flex={1} bg="teal.400" safeArea>
         Hello world
       </Box>
-    </AuthCheck>
+    </AppMiddleware>
   );
 };
 
