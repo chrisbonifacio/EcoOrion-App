@@ -2,18 +2,15 @@ import { Box } from 'native-base';
 import React, { FunctionComponent, ReactNode } from 'react';
 // import { AppHeader } from '../../component/Header';
 
-interface AppContainerProps {
+interface AuthContainerProps {
   children: ReactNode;
 }
-export const AppContainer: FunctionComponent<AppContainerProps> = ({
+export const AuthContainer: FunctionComponent<AuthContainerProps> = ({
   children,
 }) => {
   return (
-    <Box flex={1} safeArea bgColor="default.bglight">
-      {/* <AppHeader navigation={navigation} title={title} /> */}
-      <Box flex={1} bgColor="default.secondary">
-        {children}
-      </Box>
+    <Box flex={1} safeArea bgColor="default.secondary">
+      {children}
     </Box>
   );
 };
