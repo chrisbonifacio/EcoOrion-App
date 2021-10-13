@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface AuthState {
   userName: string;
   loggedIn: boolean;
+  description: string;
 }
 
 const initialState: AuthState = {
   userName: '',
   loggedIn: true,
+  description: '',
 };
 
 export const authSlice = createSlice({
@@ -25,6 +27,9 @@ export const authSlice = createSlice({
     },
     resetLoggedIn: state => {
       state.loggedIn = false;
+    },
+    updateDescription: (state, action: PayloadAction<string>) => {
+      state.description = action.payload;
     },
   },
 });
