@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Amplify from 'aws-amplify';
 import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, StatusBar } from 'native-base';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -26,6 +26,7 @@ const AppRoot = () => {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <NativeBaseProvider theme={theme}>
+            <StatusBar barStyle="light-content" />
             <App />
           </NativeBaseProvider>
         </NavigationContainer>

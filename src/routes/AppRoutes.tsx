@@ -15,7 +15,6 @@ export const HomeScreen: FunctionComponent = () => {
           alignSelf="center"
           my={8}
           mx={4}
-          bgColor="default.primary"
           shadow={9}
         >
           <Box px={8} my={16}>

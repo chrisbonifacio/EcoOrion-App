@@ -11,7 +11,7 @@ export const BaseButton: FunctionComponent<BaseButtonProps> = ({
 }) => {
   return (
     <Box my={4} mx={4}>
-      <Button bgColor="default.primary" onPress={triggerFunction}>
+      <Button onPress={triggerFunction}>
         <Text color="white" bold fontSize="lg">
           {title}
         </Text>

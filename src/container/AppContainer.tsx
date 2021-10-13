@@ -1,5 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 
-export const AppContainer: FunctionComponent = () => {
-  return <div />;
+import { BaseContainer } from './BaseContainer';
+
+interface AppContainerProps {
+  children: ReactNode;
+}
+export const AppContainer: FunctionComponent<AppContainerProps> = ({
+  children,
+}) => {
+  return <BaseContainer>{children}</BaseContainer>;
 };

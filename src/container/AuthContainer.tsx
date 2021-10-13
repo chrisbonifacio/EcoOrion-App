@@ -1,6 +1,6 @@
-import { Box } from 'native-base';
 import React, { FunctionComponent, ReactNode } from 'react';
-// import { AppHeader } from '../../component/Header';
+
+import { BaseContainer } from './BaseContainer';
 
 interface AuthContainerProps {
   children: ReactNode;
@@ -8,9 +8,5 @@ interface AuthContainerProps {
 export const AuthContainer: FunctionComponent<AuthContainerProps> = ({
   children,
 }) => {
-  return (
-    <Box flex={1} safeArea bgColor="default.secondary">
-      {children}
-    </Box>
-  );
+  return <BaseContainer>{children}</BaseContainer>;
 };
