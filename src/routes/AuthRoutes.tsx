@@ -15,7 +15,7 @@ export const AuthRoutes: FunctionComponent = () => {
   return (
     <>
       <Stack.Navigator initialRouteName="Login">
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="ConfirmNewPassword"
           component={ConfirmNewPassword}
@@ -24,22 +24,22 @@ export const AuthRoutes: FunctionComponent = () => {
           options={{ headerShown: false }}
           name="ForgetPassword"
           component={ForgetPassword}
-        /> */}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={Login}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Register"
           component={Register}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
           options={{ headerShown: false }}
           name="ResetPassword"
           component={ResetPassword}
-        /> */}
+        />
       </Stack.Navigator>
     </>
   );

@@ -35,7 +35,12 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { updateUserName, resetUserName, setLoggedIn, resetLoggedIn } =
-  authSlice.actions;
+export const {
+  updateUserName,
+  resetUserName,
+  setLoggedIn,
+  resetLoggedIn,
+  updateDescription,
+} = authSlice.actions;
 
 export default authSlice.reducer;

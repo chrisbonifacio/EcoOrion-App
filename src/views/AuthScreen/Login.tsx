@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Auth } from 'aws-amplify';
-import { Button, FormControl, HStack, Input, Link, Text } from 'native-base';
-import React, { FunctionComponent, useState } from 'react';
+import { Box, Button, HStack, Link, Text } from 'native-base';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
-import { setLoggedIn } from '../../redux/slice/authSlice';
+import { setLoggedIn, updateDescription } from '../../redux/slice/authSlice';
 
 export const Login: FunctionComponent<
   NativeStackScreenProps<{
@@ -17,6 +18,9 @@ export const Login: FunctionComponent<
   const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updateDescription('Sign in to enjoy the app.'));
+  }, [dispatch]);
   const signIn = async () => {
     try {
       const result = await Auth.signIn(username, password);
@@ -29,61 +33,45 @@ export const Login: FunctionComponent<
   };
   return (
     <AuthContainer>
-      <FormControl>
-        <FormControl.Label
-          _text={{
-            color: 'coolGray.800',
-            fontSize: 'xs',
-            fontWeight: 500,
-          }}
-        >
-          Username
-        </FormControl.Label>
-        <Input
+      <Box pb="4">
+        <TextInput
+          title="Username"
           value={username}
-          onChangeText={value => {
-            setusername(value);
-          }}
+          onChangeValue={setusername}
         />
-      </FormControl>
-      <FormControl>
-        <FormControl.Label
-          _text={{
-            color: 'coolGray.800',
-            fontSize: 'xs',
-            fontWeight: 500,
-          }}
-        >
-          Password
-        </FormControl.Label>
-        <Input
-          type="password"
+      </Box>
+      <Box pb="2">
+        <TextInput
+          title="Password"
           value={password}
-          onChangeText={value => {
-            setPassword(value);
-          }}
+          onChangeValue={setPassword}
+          type="password"
         />
-        <Link
-          _text={{ fontSize: 'xs', fontWeight: '500', color: 'indigo.500' }}
-          alignSelf="flex-end"
-          mt="1"
-          onPress={() => {
-            navigation.navigate('ForgetPassword');
-          }}
-        >
-          Forget Password?
-        </Link>
-      </FormControl>
-      <Button onPress={signIn}>Sign in</Button>
-      <HStack mt="6" justifyContent="center">
-        <Text fontSize="sm" color="muted.700" fontWeight={400}>
-          I&apos;m a new user.
+      </Box>
+      <Link
+        mb={8}
+        _text={{ fontSize: 'xs', color: 'primaryGreen' }}
+        alignSelf="flex-end"
+        onPress={() => {
+          navigation.navigate('ForgetPassword');
+        }}
+      >
+        Forget Password?
+      </Link>
+      <Box mb={8} mt={8}>
+        <Button onPress={signIn} color="primaryGreen">
+          Sign in
+        </Button>
+      </Box>
+      <HStack mb={8} justifyContent="center">
+        <Text fontSize="xs" color="white" fontWeight={400}>
+          I&apos;m a new user.{' '}
         </Text>
         <Link
           _text={{
-            color: 'indigo.500',
+            color: 'primaryGreen',
             fontWeight: 'medium',
-            fontSize: 'sm',
+            fontSize: 'xs',
           }}
           onPress={() => {
             navigation.navigate('Register');
