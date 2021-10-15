@@ -11,7 +11,14 @@ export const IconButton: FunctionComponent<IconButtonProps> = ({
   onPress,
 }) => {
   return (
-    <Button onPress={onPress} bgColor="transparent">
+    <Button
+      my={2}
+      mx={2}
+      rounded="xl"
+      onPress={onPress}
+      bgColor="transparent"
+      _pressed={{ bg: 'bgGreen' }}
+    >
       {children}
     </Button>
   );

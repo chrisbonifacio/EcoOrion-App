@@ -1,9 +1,7 @@
-import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Box } from 'native-base';
 import React, { FunctionComponent, ReactNode } from 'react';
 
 import { AppHeader } from '../components/Header/App';
-import { AppDrawerParamList } from '../types/AppRouteType';
 import { BaseContainer } from './BaseContainer';
 
 interface AppContainerProps {
@@ -15,7 +13,7 @@ export const AppContainer: FunctionComponent<AppContainerProps> = ({
   return (
     <BaseContainer>
       <AppHeader />
-      <Box flex={1} w="90%" mx="auto" my={4}>
+      <Box flex={1} flexGrow={1} w="90%" mx="auto" my={4}>
         {children}
       </Box>
     </BaseContainer>

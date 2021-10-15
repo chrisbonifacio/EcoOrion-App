@@ -1,13 +1,15 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React, { FunctionComponent } from 'react';
 
-import { HomeScreen } from '../views/AppScreen';
+import { AppDrawerParamList } from '../types/AppRouteType';
+import { HomeScreen, WebScreen } from '../views/AppScreen';
 
 export const AppRoutes: FunctionComponent = () => {
-  const Drawer = createDrawerNavigator();
+  const Drawer = createDrawerNavigator<AppDrawerParamList>();
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
       <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Web" component={WebScreen} />
     </Drawer.Navigator>
   );
 };

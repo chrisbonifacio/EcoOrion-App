@@ -29,7 +29,7 @@ export const AppHeader: FunctionComponent = () => {
           openDrawer();
         }}
       >
-        <Icon as={Entypo} name="menu" color="primaryGreen" size={10} />
+        <Icon as={Entypo} name="menu" color="primaryGreen" />
       </IconButton>
 
       <Heading color="primaryGreen">{title}</Heading>
@@ -41,7 +41,7 @@ export const AppHeader: FunctionComponent = () => {
           dispatch(resetLoggedIn());
         }}
       >
-        <Icon as={Entypo} name="log-out" color="primaryGreen" size={7} />
+        <Icon as={Entypo} name="log-out" color="primaryGreen" />
       </IconButton>
     </HStack>
   );

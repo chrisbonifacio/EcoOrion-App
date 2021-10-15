@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
+import { finishLoading, setLoading } from '../../redux/slice/appslice';
 import { setLoggedIn, updateDescription } from '../../redux/slice/authSlice';
 
 export const Login: FunctionComponent<
@@ -23,6 +24,7 @@ export const Login: FunctionComponent<
     dispatch(updateDescription('Sign in to enjoy the app.'));
   }, [dispatch]);
   const signIn = async () => {
+    dispatch(setLoading());
     try {
       const result = await Auth.signIn(username, password);
       if (result) {
@@ -31,6 +33,7 @@ export const Login: FunctionComponent<
     } catch (error_: unknown) {
       console.log(error_);
     }
+    dispatch(finishLoading());
   };
   return (
     <AuthContainer>

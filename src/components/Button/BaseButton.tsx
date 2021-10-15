@@ -10,7 +10,11 @@ export const BaseButton: FunctionComponent<BaseButtonProps> = ({
   title,
 }) => {
   return (
-    <Button onPress={onPress} backgroundColor="primaryGreen">
+    <Button
+      onPress={onPress}
+      backgroundColor="primaryGreen"
+      _pressed={{ bg: 'primaryGray' }}
+    >
       <Text color="white" bold fontSize="lg">
         {title}
       </Text>
