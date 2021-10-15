@@ -1,9 +1,10 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Auth } from 'aws-amplify';
 import { Box, Button, HStack, Link, Text } from 'native-base';
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
 import { setLoggedIn, updateDescription } from '../../redux/slice/authSlice';
@@ -17,7 +18,6 @@ export const Login: FunctionComponent<
 > = ({ navigation }) => {
   const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
-  const passwordRef = useRef();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(updateDescription('Sign in to enjoy the app.'));
@@ -28,7 +28,7 @@ export const Login: FunctionComponent<
       if (result) {
         dispatch(setLoggedIn());
       }
-    } catch (error_: any) {
+    } catch (error_: unknown) {
       console.log(error_);
     }
   };
@@ -60,9 +60,7 @@ export const Login: FunctionComponent<
         Forget Password?
       </Link>
       <Box mb={8} mt={8}>
-        <Button onPress={signIn} color="primaryGreen">
-          Sign in
-        </Button>
+        <BaseButton title="Sign In" onPress={signIn} />
       </Box>
       <HStack mb={8} justifyContent="center">
         <Text fontSize="xs" color="white" fontWeight={400}>

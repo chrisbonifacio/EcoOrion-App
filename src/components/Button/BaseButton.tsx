@@ -3,19 +3,17 @@ import React, { FunctionComponent } from 'react';
 
 interface BaseButtonProps {
   title: string;
-  triggerFunction: () => void;
+  onPress: () => void;
 }
 export const BaseButton: FunctionComponent<BaseButtonProps> = ({
-  triggerFunction,
+  onPress,
   title,
 }) => {
   return (
-    <Box my={4} mx={4}>
-      <Button onPress={triggerFunction}>
-        <Text color="white" bold fontSize="lg">
-          {title}
-        </Text>
-      </Button>
-    </Box>
+    <Button onPress={onPress} backgroundColor="primaryGreen">
+      <Text color="white" bold fontSize="lg">
+        {title}
+      </Text>
+    </Button>
   );
 };

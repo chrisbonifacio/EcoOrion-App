@@ -9,11 +9,7 @@ export const BaseContainer: FunctionComponent<BaseContainerProps> = ({
 }) => {
   return (
     <Box flex={1} safeArea bgColor="bgGreen">
-      <ScrollView flex={1}>
-        <Box flex={1} w="90%" mx="auto" my={4}>
-          {children}
-        </Box>
-      </ScrollView>
+      <ScrollView flex={1}>{children}</ScrollView>
     </Box>
   );
 };

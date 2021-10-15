@@ -1,13 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AppState {
   isLoading: boolean;
   profileCreated: boolean;
+  headerTitle: string;
 }
 
 const initialState: AppState = {
   isLoading: false,
   profileCreated: false,
+  headerTitle: '',
 };
 
 export const appSlice = createSlice({
@@ -26,6 +28,12 @@ export const appSlice = createSlice({
     resetProfileCreated: state => {
       state.profileCreated = false;
     },
+    updateHeaderTitle: (state, action: PayloadAction<string>) => {
+      state.headerTitle = action.payload;
+    },
+    resetHeaderTitle: state => {
+      state.headerTitle = '';
+    },
   },
 });
 
@@ -35,6 +43,8 @@ export const {
   finishLoading,
   setProfileCreated,
   resetProfileCreated,
+  updateHeaderTitle,
+  resetHeaderTitle,
 } = appSlice.actions;
 
 export default appSlice.reducer;

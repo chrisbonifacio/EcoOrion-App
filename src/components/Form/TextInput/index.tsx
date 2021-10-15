@@ -1,5 +1,5 @@
 import { FormControl, Input } from 'native-base';
-import React, { FunctionComponent, MutableRefObject } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface TextInputProps {
   title: string;
