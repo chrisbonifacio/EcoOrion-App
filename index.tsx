@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 import { NavigationContainer } from '@react-navigation/native';
 import Amplify from 'aws-amplify';
 import { registerRootComponent } from 'expo';

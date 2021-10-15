@@ -1,5 +1,5 @@
 import { FormControl, Input } from 'native-base';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, MutableRefObject } from 'react';
 
 interface TextInputProps {
   title: string;
@@ -35,6 +35,8 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
         selectionColor="primaryGreen"
         type={type}
         autoCapitalize="none"
+        returnKeyType="next"
+        blurOnSubmit={false}
       />
     </FormControl>
   );

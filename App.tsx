@@ -1,12 +1,12 @@
 import { Auth } from 'aws-amplify';
 import * as SplashScreen from 'expo-splash-screen';
-import { Box } from 'native-base';
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AppMiddleware } from './src/hooks';
 import { resetProfileCreated } from './src/redux/slice/appslice';
 import { resetLoggedIn, setLoggedIn } from './src/redux/slice/authSlice';
+import { AppRoutes } from './src/routes/AppRoutes';
 
 const App: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,6 @@ const App: FunctionComponent = () => {
           dispatch(resetProfileCreated());
         }
       } finally {
-        await new Promise(resolve => setTimeout(resolve, 2000));
         await SplashScreen.hideAsync();
       }
     };
@@ -32,9 +31,7 @@ const App: FunctionComponent = () => {
 
   return (
     <AppMiddleware>
-      <Box flex={1} bg="teal.400" safeArea>
-        Hello world
-      </Box>
+      <AppRoutes />
     </AppMiddleware>
   );
 };

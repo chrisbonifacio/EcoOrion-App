@@ -1,4 +1,4 @@
-import { Box, ScrollView, VStack } from 'native-base';
+import { Box, ScrollView } from 'native-base';
 import React, { FunctionComponent, ReactNode } from 'react';
 
 interface BaseContainerProps {
@@ -9,9 +9,11 @@ export const BaseContainer: FunctionComponent<BaseContainerProps> = ({
 }) => {
   return (
     <Box flex={1} safeArea bgColor="bgGreen">
-      <Box flex={1} w="90%" mx="auto">
-        {children}
-      </Box>
+      <ScrollView flex={1}>
+        <Box flex={1} w="90%" mx="auto" my={4}>
+          {children}
+        </Box>
+      </ScrollView>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Box, Heading, VStack } from 'native-base';
+import { Box, Center, Heading, VStack } from 'native-base';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -14,16 +14,18 @@ export const AuthContainer: FunctionComponent<AuthContainerProps> = ({
   const description = useSelector((state: RootState) => state.auth.description);
   return (
     <BaseContainer>
-      <Box pt={10}>
-        <Heading color="primaryGreen" size="xl" bgColor="white">
-          1M2 Farmer&apos;s App
-        </Heading>
-        <Heading color="primaryGreen" size="sm">
-          {description}
-        </Heading>
-      </Box>
       <VStack flex={1} justifyContent="flex-end">
-        {children}
+        <Box pt={10}>
+          <Heading color="primaryGreen" size="xl">
+            1M2 Farmer&apos;s App
+          </Heading>
+          <Heading color="primaryGreen" size="sm">
+            {description}
+          </Heading>
+        </Box>
+        <Box flex={1} flexGrow={1} pt={10}>
+          {children}
+        </Box>
       </VStack>
     </BaseContainer>
   );
