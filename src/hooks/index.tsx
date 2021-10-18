@@ -2,6 +2,7 @@ import React, { FunctionComponent, ReactNode } from 'react';
 
 import { AuthCheck } from './AuthCheck';
 import { LoadingCheck } from './LoadingCheck';
+import { ProfileCheck } from './ProfileCheck';
 
 interface AppMiddlewareProps {
   children: ReactNode;
@@ -11,7 +12,9 @@ export const AppMiddleware: FunctionComponent<AppMiddlewareProps> = ({
 }) => {
   return (
     <LoadingCheck>
-      <AuthCheck>{children}</AuthCheck>
+      <AuthCheck>
+        <ProfileCheck>{children}</ProfileCheck>
+      </AuthCheck>
     </LoadingCheck>
   );
 };

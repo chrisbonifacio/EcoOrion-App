@@ -5,7 +5,7 @@ import { Heading, HStack, Icon } from 'native-base';
 import React, { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetProfileCreated } from '../../redux/slice/appslice';
+import { resetProfileCreated, updateEmail } from '../../redux/slice/appslice';
 import { resetLoggedIn } from '../../redux/slice/authSlice';
 import { RootState } from '../../redux/store';
 import { IconButton } from '../Button';
@@ -39,6 +39,7 @@ export const AppHeader: FunctionComponent = () => {
           await Auth.signOut();
           dispatch(resetProfileCreated());
           dispatch(resetLoggedIn());
+          dispatch(updateEmail(''));
         }}
       >
         <Icon as={Entypo} name="log-out" color="primaryGreen" />

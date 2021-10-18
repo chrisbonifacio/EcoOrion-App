@@ -4,12 +4,14 @@ export interface AppState {
   isLoading: boolean;
   profileCreated: boolean;
   headerTitle: string;
+  email: string;
 }
 
 const initialState: AppState = {
   isLoading: false,
   profileCreated: false,
   headerTitle: '',
+  email: '',
 };
 
 export const appSlice = createSlice({
@@ -34,6 +36,9 @@ export const appSlice = createSlice({
     resetHeaderTitle: state => {
       state.headerTitle = '';
     },
+    updateEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
+    },
   },
 });
 
@@ -45,6 +50,7 @@ export const {
   resetProfileCreated,
   updateHeaderTitle,
   resetHeaderTitle,
+  updateEmail,
 } = appSlice.actions;
 
 export default appSlice.reducer;

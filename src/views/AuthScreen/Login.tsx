@@ -1,5 +1,6 @@
+import { GraphQLResult } from '@aws-amplify/api';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Auth } from 'aws-amplify';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { Box, HStack, Link, Text } from 'native-base';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,8 +8,16 @@ import { useDispatch } from 'react-redux';
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
-import { finishLoading, setLoading } from '../../redux/slice/appslice';
+import { getProfile } from '../../graphql/queries';
+import {
+  finishLoading,
+  resetProfileCreated,
+  setLoading,
+  setProfileCreated,
+  updateEmail,
+} from '../../redux/slice/appslice';
 import { setLoggedIn, updateDescription } from '../../redux/slice/authSlice';
+import { GetProfileQuery } from '../../types/api';
 
 export const Login: FunctionComponent<
   NativeStackScreenProps<{
@@ -29,6 +38,15 @@ export const Login: FunctionComponent<
       const result = await Auth.signIn(username, password);
       if (result) {
         dispatch(setLoggedIn());
+        dispatch(updateEmail(result.attributes.email));
+        const profile: GraphQLResult<GetProfileQuery> = (await API.graphql(
+          graphqlOperation(getProfile, { email: result.attributes.email }),
+        )) as GraphQLResult<GetProfileQuery>;
+        if (profile.data?.getProfile) {
+          dispatch(setProfileCreated());
+        } else {
+          dispatch(resetProfileCreated());
+        }
       }
     } catch (error_: unknown) {
       console.log(error_);
