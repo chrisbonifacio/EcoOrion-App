@@ -6,6 +6,6 @@ export const theme = extendTheme({
     primaryGray: '#5b635b',
     bgGreen: '#042517',
     bgGray: '',
-    bgHeader: '#020f09',
+    bgHeader: '#031a10',
   },
 });

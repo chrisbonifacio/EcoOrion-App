@@ -13,7 +13,7 @@ export const AppContainer: FunctionComponent<AppContainerProps> = ({
   return (
     <BaseContainer>
       <AppHeader />
-      <Box flex={1} flexGrow={1} w="90%" mx="auto" my={4}>
+      <Box flex={1} flexGrow={1}>
         {children}
       </Box>
     </BaseContainer>

@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Auth } from 'aws-amplify';
-import { Box, Button, HStack, Link, Text } from 'native-base';
+import { Box, HStack, Link, Text } from 'native-base';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

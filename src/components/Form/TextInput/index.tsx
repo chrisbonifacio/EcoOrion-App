@@ -6,6 +6,7 @@ interface TextInputProps {
   value: string;
   onChangeValue: (newValue: string) => void;
   type?: string;
+  disabled?: boolean;
 }
 
 export const TextInput: FunctionComponent<TextInputProps> = ({
@@ -13,6 +14,7 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
   value,
   onChangeValue,
   type,
+  disabled,
 }) => {
   return (
     <FormControl>
@@ -37,6 +39,11 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
         autoCapitalize="none"
         returnKeyType="next"
         blurOnSubmit={false}
+        isDisabled={disabled}
+        _disabled={{
+          bgColor: 'bgHeader',
+          opacity: '0.5',
+        }}
       />
     </FormControl>
   );
@@ -44,4 +51,5 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
 
 TextInput.defaultProps = {
   type: '',
+  disabled: false,
 };

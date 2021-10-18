@@ -1,0 +1,921 @@
+type Image @aws_api_key @aws_cognito_user_pools {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type Range @aws_api_key @aws_cognito_user_pools {
+  min: Float
+  max: Float
+  scale_unit: String
+}
+
+type Scheduler @aws_api_key @aws_cognito_user_pools {
+  cron: String!
+  duration: Int!
+}
+
+type Plant @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  type: String!
+  scientific_name: String!
+  name_bm: String!
+  name_cn: String
+  temperature: Range
+  height: Range
+  seed_planting_depth: Range
+  planting_distance_between_plants: Range
+  pruning_requirement: String!
+  soil_moisture: String!
+  sunlight: Range
+  germination: Range
+  harvest_day: Range
+  harvest_month: Range
+  water_amount: String!
+  watering_frequency: String!
+  watering_duration: String!
+  plant_nature: String!
+  pest_info: String!
+  disease_info: String!
+  image_url: [Image]
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Pest @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  detection: String!
+  management: String!
+  notes: String!
+  image_url: [Image]!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Disease @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  detection: String!
+  management: String!
+  notes: String!
+  image_url: [Image]
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Rack @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  description: String!
+  image_url: [Image]!
+  price: Float!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type NutrientTerminology @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  meaning: String!
+  image_url: [Image]!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Nutrient {
+  id: ID!
+  name: String!
+  short_name: String!
+  type: String!
+  importance: String!
+  deficient_symptom: String!
+  leaf_position: String!
+  deficient_image: [Image]!
+  worsen: String!
+  solution: String!
+  toxic_symptom: String!
+  toxic_image: [Image]!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type ContactForm @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String!
+  message: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Profile {
+  email: String!
+  name: String!
+  phone: String!
+  address_1: String!
+  address_2: String!
+  address_3: String!
+  city: String!
+  state: String!
+  postcode: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Station @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  water_schedule: Scheduler!
+  fertilizer_schedule: Scheduler!
+  station_name: String!
+  station_id: String!
+  user_id: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type StationData @aws_api_key @aws_cognito_user_pools {
+  station_id: String!
+  sample_time: AWSTimestamp!
+  station_data: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input RangeInput {
+  min: Float
+  max: Float
+  scale_unit: String
+}
+
+input ImageInput {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPlantConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Plant]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelPlantFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  type: ModelStringInput
+  scientific_name: ModelStringInput
+  name_bm: ModelStringInput
+  name_cn: ModelStringInput
+  pruning_requirement: ModelStringInput
+  soil_moisture: ModelStringInput
+  water_amount: ModelStringInput
+  watering_frequency: ModelStringInput
+  watering_duration: ModelStringInput
+  plant_nature: ModelStringInput
+  pest_info: ModelStringInput
+  disease_info: ModelStringInput
+  and: [ModelPlantFilterInput]
+  or: [ModelPlantFilterInput]
+  not: ModelPlantFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getNutrient(id: ID!): Nutrient
+  listNutrients(filter: ModelNutrientFilterInput, limit: Int, nextToken: String): ModelNutrientConnection
+  getContactForm(id: ID!): ContactForm
+  listContactForms(filter: ModelContactFormFilterInput, limit: Int, nextToken: String): ModelContactFormConnection
+  getProfile(email: String!): Profile
+  listProfiles(email: String, filter: ModelProfileFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelProfileConnection
+  getPlant(id: ID!): Plant @aws_api_key @aws_cognito_user_pools
+  listPlants(filter: ModelPlantFilterInput, limit: Int, nextToken: String): ModelPlantConnection @aws_api_key @aws_cognito_user_pools
+  getPest(id: ID!): Pest @aws_api_key @aws_cognito_user_pools
+  listPests(filter: ModelPestFilterInput, limit: Int, nextToken: String): ModelPestConnection @aws_api_key @aws_cognito_user_pools
+  getDisease(id: ID!): Disease @aws_api_key @aws_cognito_user_pools
+  listDiseases(filter: ModelDiseaseFilterInput, limit: Int, nextToken: String): ModelDiseaseConnection @aws_api_key @aws_cognito_user_pools
+  getRack(id: ID!): Rack @aws_api_key @aws_cognito_user_pools
+  listRacks(filter: ModelRackFilterInput, limit: Int, nextToken: String): ModelRackConnection @aws_api_key @aws_cognito_user_pools
+  getNutrientTerminology(id: ID!): NutrientTerminology @aws_api_key @aws_cognito_user_pools
+  listNutrientTerminologys(filter: ModelNutrientTerminologyFilterInput, limit: Int, nextToken: String): ModelNutrientTerminologyConnection @aws_api_key @aws_cognito_user_pools
+  getStation(id: ID!): Station @aws_api_key @aws_cognito_user_pools
+  listStations(filter: ModelStationFilterInput, limit: Int, nextToken: String): ModelStationConnection @aws_api_key @aws_cognito_user_pools
+  StationByUserID(user_id: String, sortDirection: ModelSortDirection, filter: ModelStationFilterInput, limit: Int, nextToken: String): ModelStationConnection @aws_api_key @aws_cognito_user_pools
+  StationByStationID(station_id: String, sortDirection: ModelSortDirection, filter: ModelStationFilterInput, limit: Int, nextToken: String): ModelStationConnection @aws_api_key @aws_cognito_user_pools
+  StationByStationIDAndUserID(station_id: String, user_id: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelStationFilterInput, limit: Int, nextToken: String): ModelStationConnection @aws_api_key @aws_cognito_user_pools
+  StationByStationIDAndStationName(station_id: String, station_name: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelStationFilterInput, limit: Int, nextToken: String): ModelStationConnection @aws_api_key @aws_cognito_user_pools
+  getStationData(sample_time: AWSTimestamp!): StationData @aws_api_key @aws_cognito_user_pools
+  listStationDatas(sample_time: AWSTimestamp, filter: ModelStationDataFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelStationDataConnection @aws_api_key @aws_cognito_user_pools
+  StationDataByStationID(station_id: String, sample_time: ModelIntKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelStationDataFilterInput, limit: Int, nextToken: String): ModelStationDataConnection @aws_api_key @aws_cognito_user_pools
+}
+
+input CreatePlantInput {
+  id: ID
+  name: String!
+  type: String!
+  scientific_name: String!
+  name_bm: String!
+  name_cn: String
+  temperature: RangeInput
+  height: RangeInput
+  seed_planting_depth: RangeInput
+  planting_distance_between_plants: RangeInput
+  pruning_requirement: String!
+  soil_moisture: String!
+  sunlight: RangeInput
+  germination: RangeInput
+  harvest_day: RangeInput
+  harvest_month: RangeInput
+  water_amount: String!
+  watering_frequency: String!
+  watering_duration: String!
+  plant_nature: String!
+  pest_info: String!
+  disease_info: String!
+  image_url: [ImageInput]
+}
+
+input UpdatePlantInput {
+  id: ID!
+  name: String
+  type: String
+  scientific_name: String
+  name_bm: String
+  name_cn: String
+  temperature: RangeInput
+  height: RangeInput
+  seed_planting_depth: RangeInput
+  planting_distance_between_plants: RangeInput
+  pruning_requirement: String
+  soil_moisture: String
+  sunlight: RangeInput
+  germination: RangeInput
+  harvest_day: RangeInput
+  harvest_month: RangeInput
+  water_amount: String
+  watering_frequency: String
+  watering_duration: String
+  plant_nature: String
+  pest_info: String
+  disease_info: String
+  image_url: [ImageInput]
+}
+
+input DeletePlantInput {
+  id: ID!
+}
+
+type Mutation {
+  createPlant(input: CreatePlantInput!, condition: ModelPlantConditionInput): Plant
+  updatePlant(input: UpdatePlantInput!, condition: ModelPlantConditionInput): Plant
+  deletePlant(input: DeletePlantInput!, condition: ModelPlantConditionInput): Plant
+  createPest(input: CreatePestInput!, condition: ModelPestConditionInput): Pest
+  updatePest(input: UpdatePestInput!, condition: ModelPestConditionInput): Pest
+  deletePest(input: DeletePestInput!, condition: ModelPestConditionInput): Pest
+  createDisease(input: CreateDiseaseInput!, condition: ModelDiseaseConditionInput): Disease
+  updateDisease(input: UpdateDiseaseInput!, condition: ModelDiseaseConditionInput): Disease
+  deleteDisease(input: DeleteDiseaseInput!, condition: ModelDiseaseConditionInput): Disease
+  createRack(input: CreateRackInput!, condition: ModelRackConditionInput): Rack
+  updateRack(input: UpdateRackInput!, condition: ModelRackConditionInput): Rack
+  deleteRack(input: DeleteRackInput!, condition: ModelRackConditionInput): Rack
+  createNutrientTerminology(input: CreateNutrientTerminologyInput!, condition: ModelNutrientTerminologyConditionInput): NutrientTerminology
+  updateNutrientTerminology(input: UpdateNutrientTerminologyInput!, condition: ModelNutrientTerminologyConditionInput): NutrientTerminology
+  deleteNutrientTerminology(input: DeleteNutrientTerminologyInput!, condition: ModelNutrientTerminologyConditionInput): NutrientTerminology
+  createNutrient(input: CreateNutrientInput!, condition: ModelNutrientConditionInput): Nutrient
+  updateNutrient(input: UpdateNutrientInput!, condition: ModelNutrientConditionInput): Nutrient
+  deleteNutrient(input: DeleteNutrientInput!, condition: ModelNutrientConditionInput): Nutrient
+  updateContactForm(input: UpdateContactFormInput!, condition: ModelContactFormConditionInput): ContactForm
+  deleteContactForm(input: DeleteContactFormInput!, condition: ModelContactFormConditionInput): ContactForm
+  createProfile(input: CreateProfileInput!, condition: ModelProfileConditionInput): Profile
+  updateProfile(input: UpdateProfileInput!, condition: ModelProfileConditionInput): Profile
+  deleteProfile(input: DeleteProfileInput!, condition: ModelProfileConditionInput): Profile
+  createContactForm(input: CreateContactFormInput!, condition: ModelContactFormConditionInput): ContactForm @aws_api_key @aws_cognito_user_pools
+  createStation(input: CreateStationInput!, condition: ModelStationConditionInput): Station @aws_api_key @aws_cognito_user_pools
+  updateStation(input: UpdateStationInput!, condition: ModelStationConditionInput): Station @aws_api_key @aws_cognito_user_pools
+  deleteStation(input: DeleteStationInput!, condition: ModelStationConditionInput): Station @aws_api_key @aws_cognito_user_pools
+  createStationData(input: CreateStationDataInput!, condition: ModelStationDataConditionInput): StationData @aws_api_key @aws_cognito_user_pools
+  updateStationData(input: UpdateStationDataInput!, condition: ModelStationDataConditionInput): StationData @aws_api_key @aws_cognito_user_pools
+  deleteStationData(input: DeleteStationDataInput!, condition: ModelStationDataConditionInput): StationData @aws_api_key @aws_cognito_user_pools
+}
+
+input ModelPlantConditionInput {
+  name: ModelStringInput
+  type: ModelStringInput
+  scientific_name: ModelStringInput
+  name_bm: ModelStringInput
+  name_cn: ModelStringInput
+  pruning_requirement: ModelStringInput
+  soil_moisture: ModelStringInput
+  water_amount: ModelStringInput
+  watering_frequency: ModelStringInput
+  watering_duration: ModelStringInput
+  plant_nature: ModelStringInput
+  pest_info: ModelStringInput
+  disease_info: ModelStringInput
+  and: [ModelPlantConditionInput]
+  or: [ModelPlantConditionInput]
+  not: ModelPlantConditionInput
+}
+
+type Subscription {
+  onCreateNutrient(owner: String): Nutrient @aws_subscribe(mutations: ["createNutrient"])
+  onUpdateNutrient(owner: String): Nutrient @aws_subscribe(mutations: ["updateNutrient"])
+  onDeleteNutrient(owner: String): Nutrient @aws_subscribe(mutations: ["deleteNutrient"])
+  onCreateContactForm: ContactForm @aws_subscribe(mutations: ["createContactForm"])
+  onUpdateContactForm: ContactForm @aws_subscribe(mutations: ["updateContactForm"])
+  onDeleteContactForm: ContactForm @aws_subscribe(mutations: ["deleteContactForm"])
+  onCreateProfile(owner: String): Profile @aws_subscribe(mutations: ["createProfile"])
+  onUpdateProfile(owner: String): Profile @aws_subscribe(mutations: ["updateProfile"])
+  onDeleteProfile(owner: String): Profile @aws_subscribe(mutations: ["deleteProfile"])
+  onCreatePlant: Plant @aws_subscribe(mutations: ["createPlant"]) @aws_api_key @aws_cognito_user_pools
+  onUpdatePlant: Plant @aws_subscribe(mutations: ["updatePlant"]) @aws_api_key @aws_cognito_user_pools
+  onDeletePlant: Plant @aws_subscribe(mutations: ["deletePlant"]) @aws_api_key @aws_cognito_user_pools
+  onCreatePest: Pest @aws_subscribe(mutations: ["createPest"]) @aws_api_key @aws_cognito_user_pools
+  onUpdatePest: Pest @aws_subscribe(mutations: ["updatePest"]) @aws_api_key @aws_cognito_user_pools
+  onDeletePest: Pest @aws_subscribe(mutations: ["deletePest"]) @aws_api_key @aws_cognito_user_pools
+  onCreateDisease: Disease @aws_subscribe(mutations: ["createDisease"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateDisease: Disease @aws_subscribe(mutations: ["updateDisease"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteDisease: Disease @aws_subscribe(mutations: ["deleteDisease"]) @aws_api_key @aws_cognito_user_pools
+  onCreateRack: Rack @aws_subscribe(mutations: ["createRack"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateRack: Rack @aws_subscribe(mutations: ["updateRack"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteRack: Rack @aws_subscribe(mutations: ["deleteRack"]) @aws_api_key @aws_cognito_user_pools
+  onCreateNutrientTerminology: NutrientTerminology @aws_subscribe(mutations: ["createNutrientTerminology"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateNutrientTerminology: NutrientTerminology @aws_subscribe(mutations: ["updateNutrientTerminology"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteNutrientTerminology: NutrientTerminology @aws_subscribe(mutations: ["deleteNutrientTerminology"]) @aws_api_key @aws_cognito_user_pools
+  onCreateStation(owner: String): Station @aws_subscribe(mutations: ["createStation"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateStation(owner: String): Station @aws_subscribe(mutations: ["updateStation"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteStation(owner: String): Station @aws_subscribe(mutations: ["deleteStation"]) @aws_api_key @aws_cognito_user_pools
+  onCreateStationData: StationData @aws_subscribe(mutations: ["createStationData"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateStationData: StationData @aws_subscribe(mutations: ["updateStationData"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteStationData: StationData @aws_subscribe(mutations: ["deleteStationData"]) @aws_api_key @aws_cognito_user_pools
+}
+
+type ModelPestConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Pest]
+  nextToken: String
+}
+
+input ModelPestFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  detection: ModelStringInput
+  management: ModelStringInput
+  notes: ModelStringInput
+  and: [ModelPestFilterInput]
+  or: [ModelPestFilterInput]
+  not: ModelPestFilterInput
+}
+
+input CreatePestInput {
+  id: ID
+  name: String!
+  description: String!
+  detection: String!
+  management: String!
+  notes: String!
+  image_url: [ImageInput]!
+}
+
+input UpdatePestInput {
+  id: ID!
+  name: String
+  description: String
+  detection: String
+  management: String
+  notes: String
+  image_url: [ImageInput]
+}
+
+input DeletePestInput {
+  id: ID!
+}
+
+input ModelPestConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  detection: ModelStringInput
+  management: ModelStringInput
+  notes: ModelStringInput
+  and: [ModelPestConditionInput]
+  or: [ModelPestConditionInput]
+  not: ModelPestConditionInput
+}
+
+type ModelDiseaseConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Disease]
+  nextToken: String
+}
+
+input ModelDiseaseFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  detection: ModelStringInput
+  management: ModelStringInput
+  notes: ModelStringInput
+  and: [ModelDiseaseFilterInput]
+  or: [ModelDiseaseFilterInput]
+  not: ModelDiseaseFilterInput
+}
+
+input CreateDiseaseInput {
+  id: ID
+  name: String!
+  description: String!
+  detection: String!
+  management: String!
+  notes: String!
+  image_url: [ImageInput]
+}
+
+input UpdateDiseaseInput {
+  id: ID!
+  name: String
+  description: String
+  detection: String
+  management: String
+  notes: String
+  image_url: [ImageInput]
+}
+
+input DeleteDiseaseInput {
+  id: ID!
+}
+
+input ModelDiseaseConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  detection: ModelStringInput
+  management: ModelStringInput
+  notes: ModelStringInput
+  and: [ModelDiseaseConditionInput]
+  or: [ModelDiseaseConditionInput]
+  not: ModelDiseaseConditionInput
+}
+
+type ModelRackConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Rack]
+  nextToken: String
+}
+
+input ModelRackFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  price: ModelFloatInput
+  and: [ModelRackFilterInput]
+  or: [ModelRackFilterInput]
+  not: ModelRackFilterInput
+}
+
+input CreateRackInput {
+  id: ID
+  name: String!
+  description: String!
+  image_url: [ImageInput]!
+  price: Float!
+}
+
+input UpdateRackInput {
+  id: ID!
+  name: String
+  description: String
+  image_url: [ImageInput]
+  price: Float
+}
+
+input DeleteRackInput {
+  id: ID!
+}
+
+input ModelRackConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  price: ModelFloatInput
+  and: [ModelRackConditionInput]
+  or: [ModelRackConditionInput]
+  not: ModelRackConditionInput
+}
+
+type ModelNutrientTerminologyConnection @aws_api_key @aws_cognito_user_pools {
+  items: [NutrientTerminology]
+  nextToken: String
+}
+
+input ModelNutrientTerminologyFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  meaning: ModelStringInput
+  and: [ModelNutrientTerminologyFilterInput]
+  or: [ModelNutrientTerminologyFilterInput]
+  not: ModelNutrientTerminologyFilterInput
+}
+
+input CreateNutrientTerminologyInput {
+  id: ID
+  name: String!
+  meaning: String!
+  image_url: [ImageInput]!
+}
+
+input UpdateNutrientTerminologyInput {
+  id: ID!
+  name: String
+  meaning: String
+  image_url: [ImageInput]
+}
+
+input DeleteNutrientTerminologyInput {
+  id: ID!
+}
+
+input ModelNutrientTerminologyConditionInput {
+  name: ModelStringInput
+  meaning: ModelStringInput
+  and: [ModelNutrientTerminologyConditionInput]
+  or: [ModelNutrientTerminologyConditionInput]
+  not: ModelNutrientTerminologyConditionInput
+}
+
+type ModelNutrientConnection {
+  items: [Nutrient]
+  nextToken: String
+}
+
+input ModelNutrientFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  short_name: ModelStringInput
+  type: ModelStringInput
+  importance: ModelStringInput
+  deficient_symptom: ModelStringInput
+  leaf_position: ModelStringInput
+  worsen: ModelStringInput
+  solution: ModelStringInput
+  toxic_symptom: ModelStringInput
+  and: [ModelNutrientFilterInput]
+  or: [ModelNutrientFilterInput]
+  not: ModelNutrientFilterInput
+}
+
+input CreateNutrientInput {
+  id: ID
+  name: String!
+  short_name: String!
+  type: String!
+  importance: String!
+  deficient_symptom: String!
+  leaf_position: String!
+  deficient_image: [ImageInput]!
+  worsen: String!
+  solution: String!
+  toxic_symptom: String!
+  toxic_image: [ImageInput]!
+}
+
+input UpdateNutrientInput {
+  id: ID!
+  name: String
+  short_name: String
+  type: String
+  importance: String
+  deficient_symptom: String
+  leaf_position: String
+  deficient_image: [ImageInput]
+  worsen: String
+  solution: String
+  toxic_symptom: String
+  toxic_image: [ImageInput]
+}
+
+input DeleteNutrientInput {
+  id: ID!
+}
+
+input ModelNutrientConditionInput {
+  name: ModelStringInput
+  short_name: ModelStringInput
+  type: ModelStringInput
+  importance: ModelStringInput
+  deficient_symptom: ModelStringInput
+  leaf_position: ModelStringInput
+  worsen: ModelStringInput
+  solution: ModelStringInput
+  toxic_symptom: ModelStringInput
+  and: [ModelNutrientConditionInput]
+  or: [ModelNutrientConditionInput]
+  not: ModelNutrientConditionInput
+}
+
+type ModelContactFormConnection {
+  items: [ContactForm]
+  nextToken: String
+}
+
+input ModelContactFormFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  email: ModelStringInput
+  phone: ModelStringInput
+  message: ModelStringInput
+  and: [ModelContactFormFilterInput]
+  or: [ModelContactFormFilterInput]
+  not: ModelContactFormFilterInput
+}
+
+input CreateContactFormInput {
+  id: ID
+  name: String!
+  email: String!
+  phone: String!
+  message: String!
+}
+
+input UpdateContactFormInput {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  message: String
+}
+
+input DeleteContactFormInput {
+  id: ID!
+}
+
+input ModelContactFormConditionInput {
+  name: ModelStringInput
+  email: ModelStringInput
+  phone: ModelStringInput
+  message: ModelStringInput
+  and: [ModelContactFormConditionInput]
+  or: [ModelContactFormConditionInput]
+  not: ModelContactFormConditionInput
+}
+
+type ModelProfileConnection {
+  items: [Profile]
+  nextToken: String
+}
+
+input ModelProfileFilterInput {
+  email: ModelStringInput
+  name: ModelStringInput
+  phone: ModelStringInput
+  address_1: ModelStringInput
+  address_2: ModelStringInput
+  address_3: ModelStringInput
+  city: ModelStringInput
+  state: ModelStringInput
+  postcode: ModelStringInput
+  and: [ModelProfileFilterInput]
+  or: [ModelProfileFilterInput]
+  not: ModelProfileFilterInput
+}
+
+input CreateProfileInput {
+  email: String!
+  name: String!
+  phone: String!
+  address_1: String!
+  address_2: String!
+  address_3: String!
+  city: String!
+  state: String!
+  postcode: String!
+}
+
+input UpdateProfileInput {
+  email: String!
+  name: String
+  phone: String
+  address_1: String
+  address_2: String
+  address_3: String
+  city: String
+  state: String
+  postcode: String
+}
+
+input DeleteProfileInput {
+  email: String!
+}
+
+input ModelProfileConditionInput {
+  name: ModelStringInput
+  phone: ModelStringInput
+  address_1: ModelStringInput
+  address_2: ModelStringInput
+  address_3: ModelStringInput
+  city: ModelStringInput
+  state: ModelStringInput
+  postcode: ModelStringInput
+  and: [ModelProfileConditionInput]
+  or: [ModelProfileConditionInput]
+  not: ModelProfileConditionInput
+}
+
+input SchedulerInput {
+  cron: String!
+  duration: Int!
+}
+
+type ModelStationConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Station]
+  nextToken: String
+}
+
+input ModelStationFilterInput {
+  id: ModelIDInput
+  station_name: ModelStringInput
+  station_id: ModelStringInput
+  user_id: ModelStringInput
+  and: [ModelStationFilterInput]
+  or: [ModelStationFilterInput]
+  not: ModelStationFilterInput
+}
+
+input CreateStationInput {
+  id: ID
+  water_schedule: SchedulerInput!
+  fertilizer_schedule: SchedulerInput!
+  station_name: String!
+  station_id: String!
+  user_id: String!
+}
+
+input UpdateStationInput {
+  id: ID!
+  water_schedule: SchedulerInput
+  fertilizer_schedule: SchedulerInput
+  station_name: String
+  station_id: String
+  user_id: String
+}
+
+input DeleteStationInput {
+  id: ID!
+}
+
+input ModelStationConditionInput {
+  station_name: ModelStringInput
+  station_id: ModelStringInput
+  user_id: ModelStringInput
+  and: [ModelStationConditionInput]
+  or: [ModelStationConditionInput]
+  not: ModelStationConditionInput
+}
+
+type ModelStationDataConnection @aws_api_key @aws_cognito_user_pools {
+  items: [StationData]
+  nextToken: String
+}
+
+input ModelStationDataFilterInput {
+  station_id: ModelStringInput
+  sample_time: ModelIntInput
+  station_data: ModelStringInput
+  and: [ModelStationDataFilterInput]
+  or: [ModelStationDataFilterInput]
+  not: ModelStationDataFilterInput
+}
+
+input CreateStationDataInput {
+  station_id: String!
+  sample_time: AWSTimestamp!
+  station_data: String!
+}
+
+input UpdateStationDataInput {
+  station_id: String
+  sample_time: AWSTimestamp!
+  station_data: String
+}
+
+input DeleteStationDataInput {
+  sample_time: AWSTimestamp!
+}
+
+input ModelStationDataConditionInput {
+  station_id: ModelStringInput
+  station_data: ModelStringInput
+  and: [ModelStationDataConditionInput]
+  or: [ModelStationDataConditionInput]
+  not: ModelStationDataConditionInput
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIntKeyConditionInput {
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
