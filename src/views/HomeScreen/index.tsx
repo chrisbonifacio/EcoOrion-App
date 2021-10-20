@@ -32,7 +32,7 @@ export const HomeScreen: FunctionComponent = () => {
             <BaseButton
               title="Stations"
               onPress={() => {
-                navigate('DashboardStation');
+                navigate('Station');
               }}
             />
           </Box>

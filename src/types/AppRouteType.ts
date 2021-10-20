@@ -13,7 +13,7 @@ export type AppScreenParamList = {
   Home: undefined;
   Profile: undefined;
   Web: undefined;
-  Station: StackScreenProps<StationScreenParamList, 'DashboardStation'>;
+  Station: undefined;
 };
 
 export type AppDrawerParamList = CompositeNavigationProp<
