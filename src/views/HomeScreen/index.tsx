@@ -1,4 +1,3 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Center, Text, VStack } from 'native-base';
 import React, { FunctionComponent } from 'react';
@@ -7,10 +6,8 @@ import { BaseButton } from '../../components/Button';
 import { AppContainer } from '../../container/AppContainer';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
-type homeScreenProp = DrawerNavigationProp<AppDrawerParamList, 'Home'>;
-
 export const HomeScreen: FunctionComponent = () => {
-  const { navigate } = useNavigation<homeScreenProp>();
+  const { navigate } = useNavigation<AppDrawerParamList>();
   return (
     <AppContainer>
       <Box w="90%" mx="auto" my={4} flex={1} flexGrow={1}>
@@ -35,7 +32,7 @@ export const HomeScreen: FunctionComponent = () => {
             <BaseButton
               title="Stations"
               onPress={() => {
-                // navigate('Station');
+                navigate('DashboardStation');
               }}
             />
           </Box>

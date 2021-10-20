@@ -1,5 +1,4 @@
-import { Box } from 'native-base';
-import React, { FunctionComponent, ReactNode, useEffect } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ProfileComponent } from '../components/Profile';
