@@ -10,9 +10,7 @@ import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
 import { getProfile } from '../../graphql/queries';
 import {
-  finishLoading,
   resetProfileCreated,
-  setLoading,
   setProfileCreated,
   updateEmail,
 } from '../../redux/slice/appslice';
@@ -33,7 +31,6 @@ export const Login: FunctionComponent<
     dispatch(updateDescription('Sign in to enjoy the app.'));
   }, [dispatch]);
   const signIn = async () => {
-    dispatch(setLoading());
     try {
       const result = await Auth.signIn(username, password);
       if (result) {
@@ -51,7 +48,6 @@ export const Login: FunctionComponent<
     } catch (error_: unknown) {
       console.log(error_);
     }
-    dispatch(finishLoading());
   };
   return (
     <AuthContainer>

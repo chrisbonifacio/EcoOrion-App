@@ -1,12 +1,18 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { CompositeNavigationProp } from '@react-navigation/native';
+import {
+  DrawerNavigationProp,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
+import {
+  CompositeNavigationProp,
+  CompositeScreenProps,
+} from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 export type StationScreenParamList = {
   DashboardStation: undefined;
   CreateStation: undefined;
-  DetailStation: undefined;
-  SettingStation: undefined;
+  DetailStation: { stationId: string };
+  SettingStation: { stationId: string; create: boolean };
 };
 
 export type AppScreenParamList = {
@@ -19,4 +25,9 @@ export type AppScreenParamList = {
 export type AppDrawerParamList = CompositeNavigationProp<
   DrawerNavigationProp<AppScreenParamList>,
   StackNavigationProp<StationScreenParamList>
+>;
+
+export type AppScreenPropList = CompositeScreenProps<
+  DrawerScreenProps<AppScreenParamList>,
+  StackScreenProps<StationScreenParamList>
 >;
