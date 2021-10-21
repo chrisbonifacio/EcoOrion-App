@@ -173,15 +173,17 @@ export const DetailStation: FunctionComponent = () => {
             </Box>
           </Box>
 
-          <BaseButton
-            title="Settings"
-            onPress={() => {
-              navigation.navigate('SettingStation', {
-                stationId: route.params.stationId,
-                create: false,
-              });
-            }}
-          />
+          <Box w="80%" mx="auto">
+            <BaseButton
+              title="Settings"
+              onPress={() => {
+                navigation.navigate('SettingStation', {
+                  stationId: route.params.stationId,
+                  create: false,
+                });
+              }}
+            />
+          </Box>
 
           <Box mx="auto">
             <Heading color="white">Station Triggers</Heading>
