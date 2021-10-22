@@ -101,196 +101,200 @@ export const SchedulerInput: FunctionComponent<SchedulerInputProp> = ({
           updateDuration(value);
         }}
       />
-      <FormControl>
-        <FormControl.Label
-          _text={{
-            color: 'white',
-          }}
-        >
-          Days
-        </FormControl.Label>
-        <Radio.Group
-          value={days.all}
-          name="daysRadioGroup"
-          onChange={(value: string) => {
-            if (value === 'true') {
+      <Box mt={2}>
+        <FormControl>
+          <FormControl.Label
+            _text={{
+              color: 'white',
+            }}
+          >
+            Days
+          </FormControl.Label>
+          <Radio.Group
+            value={days.all}
+            name="daysRadioGroup"
+            onChange={(value: string) => {
+              if (value === 'true') {
+                updateDays(prev => {
+                  return { ...prev, all: 'true' };
+                });
+                updateForm(prev => {
+                  const prevState = prev[field] as cronType;
+                  const cronState = prevState.cron.split(' ');
+                  cronState[4] = '*';
+                  prevState.cron = cronState.join(' ');
+                  prev[field] = prevState;
+                  return prev;
+                });
+              } else if (value === 'false') {
+                updateDays(prev => {
+                  return { ...prev, all: 'false' };
+                });
+              }
+            }}
+          >
+            <HStack justifyContent="space-between" w="100%" mb={2}>
+              <Radio value="true" accessibilityLabel="Every Days">
+                <Text color="white" ml={2}>
+                  Every Day
+                </Text>
+              </Radio>
+              <Radio
+                value="false"
+                accessibilityLabel="Specify days to trigger (ie."
+              >
+                <Text color="white" ml={2}>
+                  Custom
+                </Text>
+              </Radio>
+            </HStack>
+          </Radio.Group>
+          <Input
+            value={days.all === 'true' ? '' : days.day}
+            isDisabled={days.all === 'true'}
+            _focus={{
+              borderColor: 'primaryGreen',
+            }}
+            _disabled={{
+              bgColor: 'bgHeader',
+              opacity: '0.5',
+            }}
+            color="white"
+            selectionColor="primaryGreen"
+            autoCapitalize="none"
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onChangeText={value => {
               updateDays(prev => {
-                return { ...prev, all: 'true' };
+                return { ...prev, day: value };
               });
               updateForm(prev => {
-                const prevState = prev[field] as cronType;
-                const cronState = prevState.cron.split(' ');
-                cronState[4] = '*';
-                prevState.cron = cronState.join(' ');
-                prev[field] = prevState;
+                const dataday = prev[field] as cronType;
+                const cronState = dataday.cron.split(' ');
+                let newCronState = value
+                  .toLowerCase()
+                  .replace(/\s/g, '')
+                  .split(',');
+                newCronState = [...new Set(newCronState)];
+                let newCronString = '';
+                newCronState.map((element: string) => {
+                  if (element === 'mon') {
+                    newCronString += '1,';
+                  } else if (element === 'tue') {
+                    newCronString += '2,';
+                  } else if (element === 'wed') {
+                    newCronString += '3,';
+                  } else if (element === 'thu') {
+                    newCronString += '4,';
+                  } else if (element === 'fri') {
+                    newCronString += '5,';
+                  } else if (element === 'sat') {
+                    newCronString += '6,';
+                  } else if (element === 'sun') {
+                    newCronString += '7,';
+                  }
+                  return newCronString;
+                });
+                newCronString = newCronString.slice(0, -1);
+                cronState[4] = newCronString;
+                dataday.cron = cronState.join(' ');
+                prev[field] = dataday;
                 return prev;
               });
-            } else if (value === 'false') {
-              updateDays(prev => {
-                return { ...prev, all: 'false' };
-              });
-            }
-          }}
-        >
-          <HStack justifyContent="space-between" w="100%" mb={2}>
-            <Radio value="true" accessibilityLabel="Every Days">
-              <Text color="white" ml={2}>
-                Every Day
-              </Text>
-            </Radio>
-            <Radio
-              value="false"
-              accessibilityLabel="Specify days to trigger (ie."
-            >
-              <Text color="white" ml={2}>
-                Custom
-              </Text>
-            </Radio>
-          </HStack>
-        </Radio.Group>
-        <Input
-          value={days.all === 'true' ? '' : days.day}
-          isDisabled={days.all === 'true'}
-          _focus={{
-            borderColor: 'primaryGreen',
-          }}
-          _disabled={{
-            bgColor: 'bgHeader',
-            opacity: '0.5',
-          }}
-          color="white"
-          selectionColor="primaryGreen"
-          autoCapitalize="none"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onChangeText={value => {
-            updateDays(prev => {
-              return { ...prev, day: value };
-            });
-            updateForm(prev => {
-              const dataday = prev[field] as cronType;
-              const cronState = dataday.cron.split(' ');
-              let newCronState = value
+            }}
+          />
+        </FormControl>
+      </Box>
+
+      <Box mt={2}>
+        <FormControl>
+          <FormControl.Label
+            _text={{
+              color: 'white',
+            }}
+          >
+            Times
+          </FormControl.Label>
+          <Radio.Group
+            value={times.all}
+            name="timesRadioGroup"
+            onChange={(value: string) => {
+              if (value === 'true') {
+                updateTimes(prev => {
+                  return { ...prev, all: 'true' };
+                });
+                updateForm(prev => {
+                  const prevState = prev[field] as cronType;
+                  const cronState = prevState.cron.split(' ');
+                  cronState[1] = '*';
+                  prevState.cron = cronState.join(' ');
+                  prev[field] = prevState;
+                  return prev;
+                });
+              } else if (value === 'false') {
+                updateTimes(prev => {
+                  return { ...prev, all: 'false' };
+                });
+              }
+            }}
+          >
+            <HStack justifyContent="space-between" w="100%" mb={2}>
+              <Radio value="true" accessibilityLabel="Every Times">
+                <Text color="white" ml={2}>
+                  Every Time
+                </Text>
+              </Radio>
+              <Radio
+                value="false"
+                accessibilityLabel="Specify times to trigger (ie."
+              >
+                <Text color="white" ml={2}>
+                  Custom
+                </Text>
+              </Radio>
+            </HStack>
+          </Radio.Group>
+          <Input
+            value={times.all === 'true' ? '' : times.time}
+            isDisabled={times.all === 'true'}
+            _focus={{
+              borderColor: 'primaryGreen',
+            }}
+            _disabled={{
+              bgColor: 'bgHeader',
+              opacity: '0.5',
+            }}
+            color="white"
+            selectionColor="primaryGreen"
+            autoCapitalize="none"
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onChangeText={value => {
+              const value_array = value
                 .toLowerCase()
                 .replace(/\s/g, '')
-                .split(',');
-              newCronState = [...new Set(newCronState)];
-              let newCronString = '';
-              newCronState.map((element: string) => {
-                if (element === 'mon') {
-                  newCronString += '1,';
-                } else if (element === 'tue') {
-                  newCronString += '2,';
-                } else if (element === 'wed') {
-                  newCronString += '3,';
-                } else if (element === 'thu') {
-                  newCronString += '4,';
-                } else if (element === 'fri') {
-                  newCronString += '5,';
-                } else if (element === 'sat') {
-                  newCronString += '6,';
-                } else if (element === 'sun') {
-                  newCronString += '7,';
-                }
-                return newCronString;
-              });
-              newCronString = newCronString.slice(0, -1);
-              cronState[4] = newCronString;
-              dataday.cron = cronState.join(' ');
-              prev[field] = dataday;
-              return prev;
-            });
-          }}
-        />
-      </FormControl>
-
-      <FormControl>
-        <FormControl.Label
-          _text={{
-            color: 'white',
-          }}
-        >
-          Times
-        </FormControl.Label>
-        <Radio.Group
-          value={times.all}
-          name="timesRadioGroup"
-          onChange={(value: string) => {
-            if (value === 'true') {
-              updateTimes(prev => {
-                return { ...prev, all: 'true' };
-              });
+                .replace(/[a-z]/g, '')
+                .split(',')
+                .filter((val: string) => {
+                  if (parseInt(val, 10) >= 0 && parseInt(val, 10) <= 24) {
+                    return val;
+                  }
+                  return undefined;
+                });
               updateForm(prev => {
-                const prevState = prev[field] as cronType;
-                const cronState = prevState.cron.split(' ');
-                cronState[1] = '*';
-                prevState.cron = cronState.join(' ');
-                prev[field] = prevState;
+                const timeData = prev[field] as cronType;
+                const cronState = timeData.cron.split(' ');
+                cronState[1] = [...new Set(value_array)].toString();
+                timeData.cron = cronState.join(' ');
                 return prev;
               });
-            } else if (value === 'false') {
               updateTimes(prev => {
-                return { ...prev, all: 'false' };
+                return { ...prev, time: value };
               });
-            }
-          }}
-        >
-          <HStack justifyContent="space-between" w="100%" mb={2}>
-            <Radio value="true" accessibilityLabel="Every Times">
-              <Text color="white" ml={2}>
-                Every Time
-              </Text>
-            </Radio>
-            <Radio
-              value="false"
-              accessibilityLabel="Specify times to trigger (ie."
-            >
-              <Text color="white" ml={2}>
-                Custom
-              </Text>
-            </Radio>
-          </HStack>
-        </Radio.Group>
-        <Input
-          value={times.all === 'true' ? '' : times.time}
-          isDisabled={times.all === 'true'}
-          _focus={{
-            borderColor: 'primaryGreen',
-          }}
-          _disabled={{
-            bgColor: 'bgHeader',
-            opacity: '0.5',
-          }}
-          color="white"
-          selectionColor="primaryGreen"
-          autoCapitalize="none"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onChangeText={value => {
-            const value_array = value
-              .toLowerCase()
-              .replace(/\s/g, '')
-              .replace(/[a-z]/g, '')
-              .split(',')
-              .filter((val: string) => {
-                if (parseInt(val, 10) >= 0 && parseInt(val, 10) <= 24) {
-                  return val;
-                }
-                return undefined;
-              });
-            updateForm(prev => {
-              const timeData = prev[field] as cronType;
-              const cronState = timeData.cron.split(' ');
-              cronState[1] = [...new Set(value_array)].toString();
-              timeData.cron = cronState.join(' ');
-              return prev;
-            });
-            updateTimes(prev => {
-              return { ...prev, time: value };
-            });
-          }}
-        />
-      </FormControl>
+            }}
+          />
+        </FormControl>
+      </Box>
     </Box>
   );
 };

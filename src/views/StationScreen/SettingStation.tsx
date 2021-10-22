@@ -4,7 +4,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, Auth, graphqlOperation, PubSub } from 'aws-amplify';
 import { Box, Heading, ScrollView } from 'native-base';
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Alert } from 'react-native';
@@ -87,16 +87,21 @@ export const SettingStation: FunctionComponent = () => {
           graphqlOperation(updateStation, { input: { ...form } }),
         );
         if (res.data) {
-          Alert.alert('Updated', 'Station has been updated', [
-            {
-              text: 'OK',
-              onPress: () => {
-                navigation.navigate('DetailStation', {
-                  stationId: form.station_id,
-                });
+          PubSub.publish(`device/${route.params.stationId}/setting`, {
+            ...form,
+          }).then(pub => {
+            console.log(pub);
+            Alert.alert('Updated', 'Station has been update successfully', [
+              {
+                text: 'OK',
+                onPress: () => {
+                  navigation.navigate('DetailStation', {
+                    stationId: form.station_id,
+                  });
+                },
               },
-            },
-          ]);
+            ]);
+          });
         }
       }
     } catch (err) {
@@ -113,7 +118,15 @@ export const SettingStation: FunctionComponent = () => {
               station_id: form.station_id,
             }),
           );
-          if (user.attributes.email && res.data.StationByStationID.items[0]) {
+          if (user.attributes.email) {
+            updateForm(prev => {
+              return {
+                ...prev,
+                user_id: user.attributes.email,
+              };
+            });
+          }
+          if (res.data.StationByStationID.items[0]) {
             updateForm(prev => {
               return {
                 ...prev,
@@ -122,7 +135,6 @@ export const SettingStation: FunctionComponent = () => {
                   res.data.StationByStationID.items[0].water_schedule,
                 fertilizer_schedule:
                   res.data.StationByStationID.items[0].fertilizer_schedule,
-                user_id: user.attributes.email,
                 id: res.data.StationByStationID.items[0].id,
               };
             });
@@ -164,6 +176,14 @@ export const SettingStation: FunctionComponent = () => {
             />
           </Box>
           <Box>
+            <SchedulerInput
+              title="Fertilizer Schedule"
+              form={form}
+              updateForm={updateForm}
+              field="fertilizer_schedule"
+            />
+          </Box>
+          <Box mb={12} mt={4}>
             <BaseButton
               title={route.params.create ? 'Create' : 'Update'}
               onPress={async () => {
@@ -171,18 +191,26 @@ export const SettingStation: FunctionComponent = () => {
               }}
             />
           </Box>
-          <BaseButton
-            title="Back"
-            onPress={() =>
-              navigation.navigate('DetailStation', {
-                stationId: form.station_id,
-              })
-            }
-          />
-          <BaseButton
-            title="Home"
-            onPress={() => navigation.navigate('Home')}
-          />
+          <Box mb={4}>
+            <BaseButton
+              title="Back"
+              onPress={() => {
+                if (route.params.create) {
+                  navigation.navigate('CreateStation');
+                } else {
+                  navigation.navigate('DetailStation', {
+                    stationId: form.station_id,
+                  });
+                }
+              }}
+            />
+          </Box>
+          <Box mb={12}>
+            <BaseButton
+              title="Home"
+              onPress={() => navigation.navigate('Home')}
+            />
+          </Box>
         </Box>
       </ScrollView>
     </AppContainer>

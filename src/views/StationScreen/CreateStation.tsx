@@ -1,22 +1,53 @@
 import { useNavigation } from '@react-navigation/native';
-import { Box } from 'native-base';
-import React, { FunctionComponent } from 'react';
+import { Box, Heading, ScrollView, Spacer, VStack } from 'native-base';
+import React, { FunctionComponent, useState } from 'react';
 
 import { BaseButton } from '../../components/Button';
+import { TextInput } from '../../components/Form';
 import { AppContainer } from '../../container';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const CreateStation: FunctionComponent = () => {
+  const [stationID, updateStationID] = useState('');
   const navigation = useNavigation<AppDrawerParamList>();
 
   return (
     <AppContainer>
-      <Box _text={{ color: 'white' }}>CreateStation</Box>
-      <BaseButton
-        title="back to Station"
-        onPress={() => navigation.navigate('DashboardStation')}
-      />
-      <BaseButton title="Home" onPress={() => navigation.navigate('Home')} />
+      <ScrollView>
+        <Box w="80%" mx="auto" flex={1}>
+          <Box alignItems="center" alignContent="center">
+            <Heading color="white" my={4} size="xl">
+              Register new station
+            </Heading>
+          </Box>
+          <Box mt={24} alignContent="center" justifyContent="center">
+            <TextInput
+              title="Station ID"
+              value={stationID}
+              onChangeValue={value => {
+                updateStationID(value);
+              }}
+            />
+            <Box my={6}>
+              <BaseButton
+                title="Create Station"
+                onPress={() =>
+                  navigation.navigate('SettingStation', {
+                    stationId: stationID,
+                    create: true,
+                  })
+                }
+              />
+            </Box>
+            <Box>
+              <BaseButton
+                title="Cancel"
+                onPress={() => navigation.navigate('DashboardStation')}
+              />
+            </Box>
+          </Box>
+        </Box>
+      </ScrollView>
     </AppContainer>
   );
 };
