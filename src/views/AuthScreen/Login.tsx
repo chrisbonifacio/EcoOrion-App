@@ -45,8 +45,8 @@ export const Login: FunctionComponent<
           dispatch(resetProfileCreated());
         }
       }
-    } catch (error_: unknown) {
-      console.log(error_);
+    } catch (err: unknown) {
+      console.log(err);
     }
   };
   return (

@@ -43,7 +43,6 @@ export const DetailStation: FunctionComponent = () => {
     temperature: '',
   });
   const navigation = useNavigation<AppDrawerParamList>();
-
   const route = useRoute<DetailStationScreenProp>();
 
   useFocusEffect(
@@ -75,7 +74,6 @@ export const DetailStation: FunctionComponent = () => {
                   '"',
                 );
               const sensorData = JSON.parse(resData);
-              console.log(sensorData);
               updateStationData({
                 ...sensorData,
                 time: data.data.StationDataByStationID.items[0].createdAt,
@@ -113,7 +111,6 @@ export const DetailStation: FunctionComponent = () => {
         duration: type === 'water' ? water : fertilizer,
       },
     ).then(res => {
-      console.log(res);
       Alert.alert('Triggered', 'Triggered Successfully');
     });
   };

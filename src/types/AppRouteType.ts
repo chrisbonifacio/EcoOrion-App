@@ -5,6 +5,7 @@ import {
 import {
   CompositeNavigationProp,
   CompositeScreenProps,
+  NavigatorScreenParams,
 } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
@@ -19,7 +20,7 @@ export type AppScreenParamList = {
   Home: undefined;
   Profile: undefined;
   Web: undefined;
-  Station: undefined;
+  Station: NavigatorScreenParams<StationScreenParamList>;
 };
 
 export type AppDrawerParamList = CompositeNavigationProp<
