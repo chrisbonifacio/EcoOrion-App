@@ -1,13 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { Box, Center, Text, VStack } from 'native-base';
 import React, { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { AppContainer } from '../../container/AppContainer';
+import { setLoading } from '../../redux/slice/appslice';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const HomeScreen: FunctionComponent = () => {
   const { navigate } = useNavigation<AppDrawerParamList>();
+  const dispatch = useDispatch();
   return (
     <AppContainer>
       <Box w="90%" mx="auto" my={4} flex={1} flexGrow={1}>
@@ -32,6 +35,7 @@ export const HomeScreen: FunctionComponent = () => {
             <BaseButton
               title="Stations"
               onPress={() => {
+                dispatch(setLoading());
                 navigate('Station', { screen: 'DashboardStation' });
               }}
             />
@@ -48,6 +52,7 @@ export const HomeScreen: FunctionComponent = () => {
             <BaseButton
               title="Profile Settings"
               onPress={() => {
+                dispatch(setLoading());
                 navigate('Profile');
               }}
             />

@@ -4,16 +4,18 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { API, Auth } from 'aws-amplify';
 import { Box, HStack, Image, ScrollView, Text, VStack } from 'native-base';
 import React, { FunctionComponent, useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { AppContainer } from '../../container';
 import { listStations } from '../../graphql/queries';
+import { finishLoading, setLoading } from '../../redux/slice/appslice';
 import { ListStationsQuery } from '../../types/api';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const DashboardStation: FunctionComponent = () => {
   const navigation = useNavigation<AppDrawerParamList>();
-
+  const dispatch = useDispatch();
   const [stations, updateStations] = useState<
     Array<{
       __typename: 'Station';
@@ -56,10 +58,12 @@ export const DashboardStation: FunctionComponent = () => {
           }
         } catch (err) {
           console.log(err);
+        } finally {
+          dispatch(finishLoading());
         }
       };
       getStation();
-    }, []),
+    }, [dispatch]),
   );
   return (
     <AppContainer>
@@ -103,11 +107,12 @@ export const DashboardStation: FunctionComponent = () => {
                 <Box w="80%" mx="auto" key={`${station?.station_id}_${index}`}>
                   <BaseButton
                     title={station?.station_name || 'Unknown Station'}
-                    onPress={() =>
+                    onPress={() => {
+                      dispatch(setLoading());
                       navigation.navigate('DetailStation', {
                         stationId: station?.station_id || '',
-                      })
-                    }
+                      });
+                    }}
                   />
                 </Box>
               );

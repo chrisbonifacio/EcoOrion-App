@@ -9,12 +9,14 @@ import { API, Auth, graphqlOperation, PubSub } from 'aws-amplify';
 import { Box, Heading, ScrollView } from 'native-base';
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { SchedulerInput, TextInput } from '../../components/Form';
 import { AppContainer } from '../../container';
 import { createStation, updateStation } from '../../graphql/mutations';
 import { stationByStationID } from '../../graphql/queries';
+import { finishLoading, setLoading } from '../../redux/slice/appslice';
 import {
   CreateStationMutation,
   StationByStationIDQuery,
@@ -48,6 +50,7 @@ export const SettingStation: FunctionComponent = () => {
     user_id: '',
     id: '',
   });
+  const dispatch = useDispatch();
 
   const submitForm = async () => {
     if (
@@ -81,6 +84,7 @@ export const SettingStation: FunctionComponent = () => {
             {
               text: 'OK',
               onPress: () => {
+                dispatch(setLoading());
                 navigation.navigate('DetailStation', {
                   stationId: form.station_id,
                 });
@@ -101,6 +105,7 @@ export const SettingStation: FunctionComponent = () => {
               {
                 text: 'OK',
                 onPress: () => {
+                  dispatch(setLoading());
                   navigation.navigate('DetailStation', {
                     stationId: form.station_id,
                   });
@@ -169,10 +174,12 @@ export const SettingStation: FunctionComponent = () => {
           }
         } catch (err) {
           console.log(err);
+        } finally {
+          dispatch(finishLoading());
         }
       };
       getStationSetttings();
-    }, [form.station_id]),
+    }, [dispatch, form.station_id]),
   );
 
   return (
@@ -226,6 +233,7 @@ export const SettingStation: FunctionComponent = () => {
                 if (route.params.create) {
                   navigation.navigate('CreateStation');
                 } else {
+                  dispatch(setLoading());
                   navigation.navigate('DetailStation', {
                     stationId: form.station_id,
                   });

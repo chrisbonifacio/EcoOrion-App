@@ -4,13 +4,14 @@ import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { Center, Heading, ScrollView, VStack } from 'native-base';
 import React, { FunctionComponent, useCallback, useRef, useState } from 'react';
 import { Alert } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { createProfile, updateProfile } from '../../graphql/mutations';
 import { getProfile } from '../../graphql/queries';
-import { setProfileCreated } from '../../redux/slice/appslice';
+import { finishLoading, setProfileCreated } from '../../redux/slice/appslice';
+import { RootState } from '../../redux/store';
 import {
   CreateProfileMutation,
   GetProfileQuery,
@@ -39,7 +40,9 @@ interface ProfileComponentProps {
 export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
   email,
 }) => {
-  const [profileCreated, updateProfileCreated] = useState<boolean>(false);
+  const profileCreated = useSelector(
+    (state: RootState) => state.app.profileCreated,
+  );
   const [settings, updateSettings] = useState<IProfile>({
     name: '',
     email: email || '',
@@ -57,27 +60,32 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
   useFocusEffect(
     useCallback(() => {
       const getProfileFunction = async () => {
-        const user = await Auth.currentAuthenticatedUser();
-        const res: GraphQLResult<GetProfileQuery> = (await API.graphql(
-          graphqlOperation(getProfile, { email: user.attributes.email }),
-        )) as GraphQLResult<GetProfileQuery>;
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          const res: GraphQLResult<GetProfileQuery> = (await API.graphql(
+            graphqlOperation(getProfile, { email: user.attributes.email }),
+          )) as GraphQLResult<GetProfileQuery>;
 
-        if (res?.data?.getProfile && componentMounted.current) {
-          updateProfileCreated(true);
-          updateSettings(prev => {
-            return {
-              ...prev,
-              name: res?.data?.getProfile?.name || '',
-              email: res?.data?.getProfile?.email || '',
-              phone: res?.data?.getProfile?.phone || '',
-              address_1: res?.data?.getProfile?.address_1 || '',
-              address_2: res?.data?.getProfile?.address_2 || '',
-              address_3: res?.data?.getProfile?.address_3 || '',
-              city: res?.data?.getProfile?.city || '',
-              state: res?.data?.getProfile?.state || '',
-              postcode: res?.data?.getProfile?.postcode || '',
-            };
-          });
+          if (res?.data?.getProfile && componentMounted.current) {
+            updateSettings(prev => {
+              return {
+                ...prev,
+                name: res?.data?.getProfile?.name || '',
+                email: res?.data?.getProfile?.email || '',
+                phone: res?.data?.getProfile?.phone || '',
+                address_1: res?.data?.getProfile?.address_1 || '',
+                address_2: res?.data?.getProfile?.address_2 || '',
+                address_3: res?.data?.getProfile?.address_3 || '',
+                city: res?.data?.getProfile?.city || '',
+                state: res?.data?.getProfile?.state || '',
+                postcode: res?.data?.getProfile?.postcode || '',
+              };
+            });
+          }
+        } catch (err) {
+          console.log(err);
+        } finally {
+          dispatch(finishLoading());
         }
       };
       getProfileFunction();
@@ -85,7 +93,7 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
         // This code runs when component is unmounted
         componentMounted.current = false; // (4) set it to false when we leave the page
       };
-    }, []),
+    }, [dispatch]),
   );
 
   const updateState = (e: string, s: string) => {

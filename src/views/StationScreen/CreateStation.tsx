@@ -1,15 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import { Box, Heading, ScrollView, Spacer, VStack } from 'native-base';
 import React, { FunctionComponent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { AppContainer } from '../../container';
+import { setLoading } from '../../redux/slice/appslice';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const CreateStation: FunctionComponent = () => {
   const [stationID, updateStationID] = useState('');
   const navigation = useNavigation<AppDrawerParamList>();
+  const dispatch = useDispatch();
 
   return (
     <AppContainer>
@@ -31,18 +34,22 @@ export const CreateStation: FunctionComponent = () => {
             <Box my={6}>
               <BaseButton
                 title="Create Station"
-                onPress={() =>
+                onPress={() => {
+                  dispatch(setLoading());
                   navigation.navigate('SettingStation', {
                     stationId: stationID,
                     create: true,
-                  })
-                }
+                  });
+                }}
               />
             </Box>
             <Box>
               <BaseButton
                 title="Cancel"
-                onPress={() => navigation.navigate('DashboardStation')}
+                onPress={() => {
+                  dispatch(setLoading());
+                  navigation.navigate('DashboardStation');
+                }}
               />
             </Box>
           </Box>

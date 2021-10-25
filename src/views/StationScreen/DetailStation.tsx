@@ -9,11 +9,13 @@ import { API, Auth, graphqlOperation, PubSub } from 'aws-amplify';
 import { Box, Heading, ScrollView, Text, VStack } from 'native-base';
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form/TextInput';
 import { AppContainer } from '../../container';
 import { stationDataByStationID } from '../../graphql/queries';
+import { finishLoading, setLoading } from '../../redux/slice/appslice';
 import { StationDataByStationIDQuery } from '../../types/api';
 import {
   AppDrawerParamList,
@@ -46,6 +48,7 @@ export const DetailStation: FunctionComponent = () => {
   });
   const navigation = useNavigation<AppDrawerParamList>();
   const route = useRoute<DetailStationScreenProp>();
+  const dispatch = useDispatch();
 
   useFocusEffect(
     useCallback(() => {
@@ -91,6 +94,8 @@ export const DetailStation: FunctionComponent = () => {
           }
         } catch (err) {
           console.log(err);
+        } finally {
+          dispatch(finishLoading());
         }
       };
       stationSensorData();
@@ -98,7 +103,7 @@ export const DetailStation: FunctionComponent = () => {
       return () => {
         pub.unsubscribe();
       };
-    }, [route.params.stationId]),
+    }, [dispatch, route.params.stationId]),
   );
 
   const triggerStationControl = (type: string) => {
@@ -183,6 +188,7 @@ export const DetailStation: FunctionComponent = () => {
             <BaseButton
               title="Settings"
               onPress={() => {
+                dispatch(setLoading());
                 navigation.navigate('SettingStation', {
                   stationId: route.params.stationId,
                   create: false,
@@ -237,7 +243,10 @@ export const DetailStation: FunctionComponent = () => {
           <Box w="80%" mx="auto" mb={6}>
             <BaseButton
               title="Back"
-              onPress={() => navigation.navigate('DashboardStation')}
+              onPress={() => {
+                dispatch(setLoading());
+                navigation.navigate('DashboardStation');
+              }}
             />
           </Box>
         </VStack>
