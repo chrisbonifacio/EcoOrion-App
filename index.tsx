@@ -3,9 +3,8 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import Amplify from 'aws-amplify';
 import { registerRootComponent } from 'expo';
-import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, StatusBar } from 'native-base';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -17,12 +16,6 @@ import { theme } from './src/theme';
 Amplify.configure(config);
 
 const AppRoot = () => {
-  useEffect(() => {
-    const prepareApp = async () => {
-      await SplashScreen.preventAutoHideAsync();
-    };
-    prepareApp();
-  }, []);
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

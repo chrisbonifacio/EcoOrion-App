@@ -14,7 +14,8 @@ export const LoadingCheck: FunctionComponent<LoadingCheckProps> = ({
   return (
     <>
       {isLoading && <LoadingComponent />}
-      {!isLoading && children}
+      {/* <LoadingComponent /> */}
+      {children}
     </>
   );
 };

@@ -1,7 +1,8 @@
 import { GraphQLResult } from '@aws-amplify/api';
+import { useFocusEffect } from '@react-navigation/native';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { Center, Heading, ScrollView, VStack } from 'native-base';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useRef, useState } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -47,34 +48,41 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
     postcode: '',
   });
   const dispatch = useDispatch();
+  const componentMounted = useRef(true);
 
-  useEffect(() => {
-    const getProfileFunction = async () => {
-      const user = await Auth.currentAuthenticatedUser();
-      const res: GraphQLResult<GetProfileQuery> = (await API.graphql(
-        graphqlOperation(getProfile, { email: user.attributes.email }),
-      )) as GraphQLResult<GetProfileQuery>;
+  useFocusEffect(
+    useCallback(() => {
+      const getProfileFunction = async () => {
+        const user = await Auth.currentAuthenticatedUser();
+        const res: GraphQLResult<GetProfileQuery> = (await API.graphql(
+          graphqlOperation(getProfile, { email: user.attributes.email }),
+        )) as GraphQLResult<GetProfileQuery>;
 
-      if (res?.data?.getProfile) {
-        updateProfileCreated(true);
-        updateSettings(prev => {
-          return {
-            ...prev,
-            name: res?.data?.getProfile?.name || '',
-            email: res?.data?.getProfile?.email || '',
-            phone: res?.data?.getProfile?.phone || '',
-            address_1: res?.data?.getProfile?.address_1 || '',
-            address_2: res?.data?.getProfile?.address_2 || '',
-            address_3: res?.data?.getProfile?.address_3 || '',
-            city: res?.data?.getProfile?.city || '',
-            state: res?.data?.getProfile?.state || '',
-            postcode: res?.data?.getProfile?.postcode || '',
-          };
-        });
-      }
-    };
-    getProfileFunction();
-  }, []);
+        if (res?.data?.getProfile && componentMounted.current) {
+          updateProfileCreated(true);
+          updateSettings(prev => {
+            return {
+              ...prev,
+              name: res?.data?.getProfile?.name || '',
+              email: res?.data?.getProfile?.email || '',
+              phone: res?.data?.getProfile?.phone || '',
+              address_1: res?.data?.getProfile?.address_1 || '',
+              address_2: res?.data?.getProfile?.address_2 || '',
+              address_3: res?.data?.getProfile?.address_3 || '',
+              city: res?.data?.getProfile?.city || '',
+              state: res?.data?.getProfile?.state || '',
+              postcode: res?.data?.getProfile?.postcode || '',
+            };
+          });
+        }
+      };
+      getProfileFunction();
+      return () => {
+        // This code runs when component is unmounted
+        componentMounted.current = false; // (4) set it to false when we leave the page
+      };
+    }, []),
+  );
 
   const updateState = (e: string, s: string) => {
     updateSettings(prevState => {

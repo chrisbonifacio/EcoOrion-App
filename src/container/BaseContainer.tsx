@@ -10,8 +10,12 @@ export const BaseContainer: FunctionComponent<BaseContainerProps> = ({
   children,
 }) => {
   return (
-    <Box flex={1} safeArea bgColor="bgGreen">
-      <LoadingCheck>{children}</LoadingCheck>
+    <Box flex={1} safeArea bgColor="bgHeader">
+      <LoadingCheck>
+        <Box flex={1} bgColor="bgGreen">
+          {children}
+        </Box>
+      </LoadingCheck>
     </Box>
   );
 };
