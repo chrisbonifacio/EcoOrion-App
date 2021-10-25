@@ -1,3 +1,4 @@
+import { GraphQLResult } from '@aws-amplify/api';
 import {
   RouteProp,
   useFocusEffect,
@@ -13,6 +14,7 @@ import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form/TextInput';
 import { AppContainer } from '../../container';
 import { stationDataByStationID } from '../../graphql/queries';
+import { StationDataByStationIDQuery } from '../../types/api';
 import {
   AppDrawerParamList,
   StationScreenParamList,
@@ -60,23 +62,30 @@ export const DetailStation: FunctionComponent = () => {
         try {
           const user = await Auth.currentAuthenticatedUser();
           if (user) {
-            const data = await API.graphql(
-              graphqlOperation(stationDataByStationID, {
-                station_id: route.params.stationId,
-                sortDirection: 'DESC',
-                limit: 1,
-              }),
-            );
-            if (data.data.StationDataByStationID.items.length > 0) {
+            const data: GraphQLResult<StationDataByStationIDQuery> =
+              (await API.graphql(
+                graphqlOperation(stationDataByStationID, {
+                  station_id: route.params.stationId,
+                  sortDirection: 'DESC',
+                  limit: 1,
+                }),
+              )) as GraphQLResult<StationDataByStationIDQuery>;
+            if (
+              data?.data?.StationDataByStationID?.items &&
+              data?.data?.StationDataByStationID?.items.length > 0
+            ) {
               const resData =
-                data.data.StationDataByStationID.items[0].station_data.replace(
+                data?.data?.StationDataByStationID?.items[0] &&
+                data?.data?.StationDataByStationID?.items[0].station_data.replace(
                   /'/g,
                   '"',
                 );
-              const sensorData = JSON.parse(resData);
+              const sensorData: StationDataProp = JSON.parse(resData || '');
               updateStationData({
                 ...sensorData,
-                time: data.data.StationDataByStationID.items[0].createdAt,
+                time: data?.data?.StationDataByStationID?.items[0]
+                  ? data?.data?.StationDataByStationID?.items[0].createdAt
+                  : '',
               });
             }
           }

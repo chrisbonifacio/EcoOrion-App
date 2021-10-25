@@ -1,3 +1,4 @@
+import { GraphQLResult } from '@aws-amplify/api';
 import {
   RouteProp,
   useFocusEffect,
@@ -14,6 +15,11 @@ import { SchedulerInput, TextInput } from '../../components/Form';
 import { AppContainer } from '../../container';
 import { createStation, updateStation } from '../../graphql/mutations';
 import { stationByStationID } from '../../graphql/queries';
+import {
+  CreateStationMutation,
+  StationByStationIDQuery,
+  UpdateStationMutation,
+} from '../../types/api';
 import {
   AppDrawerParamList,
   StationScreenParamList,
@@ -59,7 +65,7 @@ export const SettingStation: FunctionComponent = () => {
 
     try {
       if (route.params.create) {
-        const res = await API.graphql(
+        const res: GraphQLResult<CreateStationMutation> = (await API.graphql(
           graphqlOperation(createStation, {
             input: {
               station_id: form.station_id,
@@ -69,7 +75,7 @@ export const SettingStation: FunctionComponent = () => {
               user_id: form.user_id,
             },
           }),
-        );
+        )) as GraphQLResult<CreateStationMutation>;
         if (res.data) {
           Alert.alert('Created', 'Station has been created', [
             {
@@ -83,9 +89,9 @@ export const SettingStation: FunctionComponent = () => {
           ]);
         }
       } else {
-        const res = await API.graphql(
+        const res: GraphQLResult<UpdateStationMutation> = (await API.graphql(
           graphqlOperation(updateStation, { input: { ...form } }),
-        );
+        )) as GraphQLResult<UpdateStationMutation>;
         if (res.data) {
           PubSub.publish(`device/${route.params.stationId}/setting`, {
             ...form,
@@ -113,11 +119,12 @@ export const SettingStation: FunctionComponent = () => {
       const getStationSetttings = async () => {
         try {
           const user = await Auth.currentAuthenticatedUser();
-          const res = await API.graphql(
-            graphqlOperation(stationByStationID, {
-              station_id: form.station_id,
-            }),
-          );
+          const res: GraphQLResult<StationByStationIDQuery> =
+            (await API.graphql(
+              graphqlOperation(stationByStationID, {
+                station_id: form.station_id,
+              }),
+            )) as GraphQLResult<StationByStationIDQuery>;
           if (user.attributes.email) {
             updateForm(prev => {
               return {
@@ -126,17 +133,38 @@ export const SettingStation: FunctionComponent = () => {
               };
             });
           }
-          if (res.data.StationByStationID.items[0]) {
+          if (
+            res?.data?.StationByStationID?.items &&
+            res?.data?.StationByStationID?.items[0]
+          ) {
             updateForm(prev => {
               return {
                 ...prev,
-                station_name: res.data.StationByStationID.items[0].station_name,
+                station_name:
+                  res?.data?.StationByStationID?.items &&
+                  res?.data?.StationByStationID?.items[0] &&
+                  res?.data?.StationByStationID?.items[0].station_name
+                    ? res?.data?.StationByStationID?.items[0].station_name
+                    : '',
                 water_schedule:
-                  res.data.StationByStationID.items[0].water_schedule,
+                  res?.data?.StationByStationID?.items &&
+                  res?.data?.StationByStationID?.items[0] &&
+                  res.data.StationByStationID.items[0].water_schedule
+                    ? res.data.StationByStationID.items[0].water_schedule
+                    : { cron: '', duration: '' },
                 fertilizer_schedule:
-                  res.data.StationByStationID.items[0].fertilizer_schedule,
-                id: res.data.StationByStationID.items[0].id,
-              };
+                  res?.data?.StationByStationID?.items &&
+                  res?.data?.StationByStationID?.items[0] &&
+                  res.data.StationByStationID.items[0].fertilizer_schedule
+                    ? res.data.StationByStationID.items[0].fertilizer_schedule
+                    : { cron: '', duration: '' },
+                id:
+                  res?.data?.StationByStationID?.items &&
+                  res?.data?.StationByStationID?.items[0] &&
+                  res.data.StationByStationID.items[0].id
+                    ? res.data.StationByStationID.items[0].id
+                    : '',
+              } as SettingStationFormState;
             });
           }
         } catch (err) {

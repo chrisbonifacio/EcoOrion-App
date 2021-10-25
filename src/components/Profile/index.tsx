@@ -11,7 +11,11 @@ import { TextInput } from '../../components/Form';
 import { createProfile, updateProfile } from '../../graphql/mutations';
 import { getProfile } from '../../graphql/queries';
 import { setProfileCreated } from '../../redux/slice/appslice';
-import { GetProfileQuery } from '../../types/api';
+import {
+  CreateProfileMutation,
+  GetProfileQuery,
+  UpdateProfileMutation,
+} from '../../types/api';
 
 interface IObjectKeys {
   [key: string]: string;
@@ -108,7 +112,7 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
     }
     try {
       if (profileCreated) {
-        const res = await API.graphql(
+        const res: GraphQLResult<UpdateProfileMutation> = (await API.graphql(
           graphqlOperation(updateProfile, {
             input: {
               name: settings.name,
@@ -122,12 +126,12 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
               postcode: settings.postcode,
             },
           }),
-        );
-        if (res.data.updateProfile) {
+        )) as GraphQLResult<UpdateProfileMutation>;
+        if (res?.data?.updateProfile) {
           Alert.alert('Success', 'Profile has been updated');
         }
       } else {
-        const res = await API.graphql(
+        const res: GraphQLResult<CreateProfileMutation> = (await API.graphql(
           graphqlOperation(createProfile, {
             input: {
               name: settings.name,
@@ -141,8 +145,8 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
               postcode: settings.postcode,
             },
           }),
-        );
-        if (res.data.createProfile) {
+        )) as GraphQLResult<CreateProfileMutation>;
+        if (res?.data?.createProfile) {
           Alert.alert('Success', 'Profile has been created', [
             {
               text: 'OK',

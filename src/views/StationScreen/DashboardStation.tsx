@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+import { GraphQLResult } from '@aws-amplify/api';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { API, Auth } from 'aws-amplify';
 import { Box, HStack, Image, ScrollView, Text, VStack } from 'native-base';
@@ -7,6 +8,7 @@ import React, { FunctionComponent, useCallback, useState } from 'react';
 import { BaseButton } from '../../components/Button';
 import { AppContainer } from '../../container';
 import { listStations } from '../../graphql/queries';
+import { ListStationsQuery } from '../../types/api';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const DashboardStation: FunctionComponent = () => {
@@ -42,9 +44,11 @@ export const DashboardStation: FunctionComponent = () => {
         try {
           const user = await Auth.currentAuthenticatedUser();
           if (user) {
-            const data = await API.graphql({ query: listStations });
+            const data: GraphQLResult<ListStationsQuery> = (await API.graphql({
+              query: listStations,
+            })) as GraphQLResult<ListStationsQuery>;
             if (
-              data.data.listStations.items &&
+              data?.data?.listStations?.items &&
               data.data.listStations.items.length > 0
             ) {
               updateStations(data.data.listStations.items);
