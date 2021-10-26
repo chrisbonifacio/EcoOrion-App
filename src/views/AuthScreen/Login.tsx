@@ -1,8 +1,9 @@
 import { GraphQLResult } from '@aws-amplify/api';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { Box, HStack, Link, ScrollView, Text } from 'native-base';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
@@ -10,6 +11,7 @@ import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
 import { getProfile } from '../../graphql/queries';
 import {
+  finishLoading,
   resetProfileCreated,
   setLoading,
   setProfileCreated,
@@ -46,6 +48,11 @@ export const Login: FunctionComponent<
         }
       }
     } catch (err: unknown) {
+      dispatch(finishLoading());
+      // if (error_.message === 'User is not confirmed.') {
+      //   setAuthStatus('confirmPassword');
+      //   setUserName(username);
+      // }
       console.log(err);
     }
   };
@@ -97,6 +104,34 @@ export const Login: FunctionComponent<
             Sign Up
           </Link>
         </HStack>
+        <Box pb="4">
+          <BaseButton
+            title="Sign In with facebook"
+            onPress={useCallback(() => {
+              try {
+                Auth.federatedSignIn({
+                  provider: CognitoHostedUIIdentityProvider.Facebook,
+                });
+              } catch (err) {
+                console.log(err);
+              }
+            }, [])}
+          />
+        </Box>
+        <Box pb="4">
+          <BaseButton
+            title="Sign In with google"
+            onPress={useCallback(() => {
+              try {
+                Auth.federatedSignIn({
+                  provider: CognitoHostedUIIdentityProvider.Google,
+                });
+              } catch (err) {
+                console.log(err);
+              }
+            }, [])}
+          />
+        </Box>
       </ScrollView>
     </AuthContainer>
   );
