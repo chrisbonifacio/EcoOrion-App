@@ -10,7 +10,6 @@ import { TextInput } from '../../components/Form';
 import { AuthContainer } from '../../container';
 import { getProfile } from '../../graphql/queries';
 import {
-  finishLoading,
   resetProfileCreated,
   setLoading,
   setProfileCreated,
@@ -48,8 +47,6 @@ export const Login: FunctionComponent<
       }
     } catch (err: unknown) {
       console.log(err);
-    } finally {
-      dispatch(finishLoading());
     }
   };
   return (

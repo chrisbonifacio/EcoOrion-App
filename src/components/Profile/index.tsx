@@ -22,7 +22,7 @@ interface IObjectKeys {
   [key: string]: string;
 }
 
-interface IProfile extends IObjectKeys {
+export interface IProfile extends IObjectKeys {
   name: string;
   email: string;
   phone: string;
@@ -34,18 +34,18 @@ interface IProfile extends IObjectKeys {
   postcode: string;
 }
 interface ProfileComponentProps {
-  email?: string;
+  formData: IProfile;
 }
 
 export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
-  email,
+  formData,
 }) => {
   const profileCreated = useSelector(
     (state: RootState) => state.app.profileCreated,
   );
   const [settings, updateSettings] = useState<IProfile>({
     name: '',
-    email: email || '',
+    email: '',
     phone: '',
     address_1: '',
     address_2: '',
@@ -55,45 +55,13 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
     postcode: '',
   });
   const dispatch = useDispatch();
-  const componentMounted = useRef(true);
 
   useFocusEffect(
     useCallback(() => {
-      const getProfileFunction = async () => {
-        try {
-          const user = await Auth.currentAuthenticatedUser();
-          const res: GraphQLResult<GetProfileQuery> = (await API.graphql(
-            graphqlOperation(getProfile, { email: user.attributes.email }),
-          )) as GraphQLResult<GetProfileQuery>;
-
-          if (res?.data?.getProfile && componentMounted.current) {
-            updateSettings(prev => {
-              return {
-                ...prev,
-                name: res?.data?.getProfile?.name || '',
-                email: res?.data?.getProfile?.email || '',
-                phone: res?.data?.getProfile?.phone || '',
-                address_1: res?.data?.getProfile?.address_1 || '',
-                address_2: res?.data?.getProfile?.address_2 || '',
-                address_3: res?.data?.getProfile?.address_3 || '',
-                city: res?.data?.getProfile?.city || '',
-                state: res?.data?.getProfile?.state || '',
-                postcode: res?.data?.getProfile?.postcode || '',
-              };
-            });
-          }
-        } catch (err) {
-          console.log(err);
-        } finally {
-          dispatch(finishLoading());
-        }
-      };
-      getProfileFunction();
-      return () => {
-        // This code runs when component is unmounted
-        componentMounted.current = false; // (4) set it to false when we leave the page
-      };
-    }, [dispatch]),
+      updateSettings({
+        ...formData,
+      });
+    }, [formData]),
   );
 
   const updateState = (e: string, s: string) => {
@@ -103,6 +71,7 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
       return newState;
     });
   };
+
   const submitForm = async () => {
     if (
       settings.name === '' ||
@@ -169,11 +138,8 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
       console.log(err);
     }
   };
+
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    //   keyboardVerticalOffset={60}
-    // >
     <ScrollView my={4} mx={4}>
       <VStack space={6}>
         <Center>
@@ -231,10 +197,5 @@ export const ProfileComponent: FunctionComponent<ProfileComponentProps> = ({
         />
       </VStack>
     </ScrollView>
-    // </KeyboardAvoidingView>
   );
-};
-
-ProfileComponent.defaultProps = {
-  email: '',
 };

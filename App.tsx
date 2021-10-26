@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { getProfile } from './src/graphql/queries';
 import { AppMiddleware } from './src/hooks';
 import {
+  finishLoading,
   resetProfileCreated,
   setProfileCreated,
   updateEmail,
@@ -19,6 +20,7 @@ const App: FunctionComponent = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const prepareApp = async () => {
+      dispatch(finishLoading());
       try {
         const user = await Auth.currentAuthenticatedUser();
         if (user) {
@@ -32,6 +34,8 @@ const App: FunctionComponent = () => {
           } else {
             dispatch(resetProfileCreated());
           }
+        } else {
+          dispatch(resetProfileCreated());
         }
       } catch (err) {
         if (err === 'The user is not authenticated') {

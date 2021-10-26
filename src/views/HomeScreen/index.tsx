@@ -1,16 +1,27 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Box, Center, Text, VStack } from 'native-base';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { AppContainer } from '../../container/AppContainer';
-import { setLoading } from '../../redux/slice/appslice';
+import { finishLoading, setLoading } from '../../redux/slice/appslice';
 import { AppDrawerParamList } from '../../types/AppRouteType';
 
 export const HomeScreen: FunctionComponent = () => {
   const { navigate } = useNavigation<AppDrawerParamList>();
   const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(finishLoading());
+    }, [dispatch]),
+  );
+
+  useEffect(() => {
+    dispatch(finishLoading());
+  }, [dispatch]);
+
   return (
     <AppContainer>
       <Box w="90%" mx="auto" my={4} flex={1} flexGrow={1}>
