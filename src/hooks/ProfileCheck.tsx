@@ -77,8 +77,8 @@ export const ProfileCheck: FunctionComponent<ProfileCheckProps> = ({
             }
           }
         } catch (err) {
-          console.log(err);
           if (componentMounted.current) {
+            console.log(err);
             updateFormData(prev => {
               return {
                 ...prev,

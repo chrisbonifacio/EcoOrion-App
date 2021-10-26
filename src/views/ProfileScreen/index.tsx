@@ -1,13 +1,7 @@
 import { GraphQLResult } from '@aws-amplify/api';
 import { useFocusEffect } from '@react-navigation/native';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { IProfile, ProfileComponent } from '../../components/Profile';

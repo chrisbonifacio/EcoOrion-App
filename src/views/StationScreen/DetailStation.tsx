@@ -125,6 +125,7 @@ export const DetailStation: FunctionComponent = () => {
         duration: type === 'water' ? water : fertilizer,
       },
     ).then(res => {
+      console.log(res);
       Alert.alert('Triggered', 'Triggered Successfully');
     });
   };

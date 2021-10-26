@@ -5,10 +5,12 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { Box, Button } from 'native-base';
-import React from 'react';
+import { Box } from 'native-base';
+import React, { FunctionComponent } from 'react';
 
-export const AppDrawer = (props: DrawerContentComponentProps) => {
+export const AppDrawer: FunctionComponent<DrawerContentComponentProps> = (
+  props: DrawerContentComponentProps,
+) => {
   return (
     <DrawerContentScrollView>
       <DrawerItemList {...props}>

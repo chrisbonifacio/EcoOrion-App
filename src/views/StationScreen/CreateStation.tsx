@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Box, Heading, ScrollView, Spacer, VStack } from 'native-base';
+import { Box, Heading, ScrollView } from 'native-base';
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

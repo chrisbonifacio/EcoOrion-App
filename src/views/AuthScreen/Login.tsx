@@ -1,7 +1,7 @@
 import { GraphQLResult } from '@aws-amplify/api';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { Box, HStack, Link, Text } from 'native-base';
+import { Box, HStack, Link, ScrollView, Text } from 'native-base';
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -51,51 +51,53 @@ export const Login: FunctionComponent<
   };
   return (
     <AuthContainer>
-      <Box pb="4">
-        <TextInput
-          title="Username"
-          value={username}
-          onChangeValue={setusername}
-        />
-      </Box>
-      <Box pb="2">
-        <TextInput
-          title="Password"
-          value={password}
-          onChangeValue={setPassword}
-          type="password"
-        />
-      </Box>
-      <Link
-        mb={8}
-        _text={{ fontSize: 'xs', color: 'primaryGreen' }}
-        alignSelf="flex-end"
-        onPress={() => {
-          navigation.navigate('ForgetPassword');
-        }}
-      >
-        Forget Password?
-      </Link>
-      <Box mb={8} mt={8}>
-        <BaseButton title="Sign In" onPress={signIn} />
-      </Box>
-      <HStack mb={8} justifyContent="center">
-        <Text fontSize="xs" color="white" fontWeight={400}>
-          I&apos;m a new user.{' '}
-        </Text>
+      <ScrollView>
+        <Box pb="4">
+          <TextInput
+            title="Username"
+            value={username}
+            onChangeValue={setusername}
+          />
+        </Box>
+        <Box pb="2">
+          <TextInput
+            title="Password"
+            value={password}
+            onChangeValue={setPassword}
+            type="password"
+          />
+        </Box>
         <Link
-          _text={{
-            color: 'primaryGreen',
-            fontWeight: 'medium',
-            fontSize: 'xs',
-          }}
+          mb={8}
+          _text={{ fontSize: 'xs', color: 'primaryGreen' }}
+          alignSelf="flex-end"
           onPress={() => {
-            navigation.navigate('Register');
+            navigation.navigate('ForgetPassword');
           }}
         >
-          Sign Up
+          Forget Password?
         </Link>
-      </HStack>
+        <Box mb={8} mt={8}>
+          <BaseButton title="Sign In" onPress={signIn} />
+        </Box>
+        <HStack mb={8} justifyContent="center">
+          <Text fontSize="xs" color="white" fontWeight={400}>
+            I&apos;m a new user.{' '}
+          </Text>
+          <Link
+            _text={{
+              color: 'primaryGreen',
+              fontWeight: 'medium',
+              fontSize: 'xs',
+            }}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}
+          >
+            Sign Up
+          </Link>
+        </HStack>
+      </ScrollView>
     </AuthContainer>
   );
 };

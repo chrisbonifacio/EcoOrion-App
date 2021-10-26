@@ -1,22 +1,17 @@
 import { GraphQLResult } from '@aws-amplify/api';
 import { useFocusEffect } from '@react-navigation/native';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { Center, Heading, ScrollView, VStack } from 'native-base';
-import React, { FunctionComponent, useCallback, useRef, useState } from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
 import { TextInput } from '../../components/Form';
 import { createProfile, updateProfile } from '../../graphql/mutations';
-import { getProfile } from '../../graphql/queries';
-import { finishLoading, setProfileCreated } from '../../redux/slice/appslice';
+import { setProfileCreated } from '../../redux/slice/appslice';
 import { RootState } from '../../redux/store';
-import {
-  CreateProfileMutation,
-  GetProfileQuery,
-  UpdateProfileMutation,
-} from '../../types/api';
+import { CreateProfileMutation, UpdateProfileMutation } from '../../types/api';
 
 interface IObjectKeys {
   [key: string]: string;
