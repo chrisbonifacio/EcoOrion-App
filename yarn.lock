@@ -38,7 +38,7 @@
     "@aws-amplify/core" "4.3.3"
     axios "0.21.4"
 
-"@aws-amplify/api@4.0.21":
+"@aws-amplify/api@4.0.21", "@aws-amplify/api@^4.0.21":
   version "4.0.21"
   resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-4.0.21.tgz#f194218be561e51080685e4898032477e40b4731"
   integrity sha512-IPeG+LS2Y7+goPc0+LUwNuI/SAKiPY1oNhLIzQ6AwJ0xee4rLS2IJxxwGPGeJui6sjz59yGE/+zqZS9v2laj/w==
@@ -46,7 +46,7 @@
     "@aws-amplify/api-graphql" "2.2.10"
     "@aws-amplify/api-rest" "2.0.21"
 
-"@aws-amplify/auth@4.3.11":
+"@aws-amplify/auth@4.3.11", "@aws-amplify/auth@^4.3.11":
   version "4.3.11"
   resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-4.3.11.tgz#2df26672ae8b982816dfc0b77ca21826a7532d11"
   integrity sha512-1wI7cjmKaF1nQ+1RWB+sPIJ4OpVFmfSTuVnx9ayrGPDqNGKRI2fiW4ZVXq5SDLdQSa9rBm7cHAubTyn/SXRbWQ==
@@ -5043,7 +5043,7 @@ aws-amplify-react-native@^5.0.3:
   dependencies:
     buffer "^5.2.1"
 
-aws-amplify@^4.3.2:
+aws-amplify@^4.3.3:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-4.3.3.tgz#f51de76b90342cef9c72a6e0bba6eb6f35660bd4"
   integrity sha512-+2piru/fAdSlobTIbiy2mWkRcbwXHmGD7pRb+i+9VUnanR14d3CHX+w9nn9A8IACdKCfXZqOTirIKzb0HYvsBg==
