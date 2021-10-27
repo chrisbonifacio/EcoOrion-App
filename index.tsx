@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import { NavigationContainer } from '@react-navigation/native';
-import Amplify, { Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import { registerRootComponent } from 'expo';
 import * as WebBrowser from 'expo-web-browser';
 import { WebBrowserRedirectResult } from 'expo-web-browser';
@@ -41,7 +41,6 @@ const awsConfig = {
 };
 
 Amplify.configure(awsConfig);
-Auth.configure(awsConfig);
 
 const AppRoot = () => {
   return (
