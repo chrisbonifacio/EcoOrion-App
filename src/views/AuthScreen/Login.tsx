@@ -1,9 +1,14 @@
 import { GraphQLResult } from '@aws-amplify/api';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, Auth, graphqlOperation, Hub } from 'aws-amplify';
 import { Box, HStack, Link, ScrollView, Text } from 'native-base';
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 import { BaseButton } from '../../components/Button';
@@ -31,7 +36,7 @@ export const Login: FunctionComponent<
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const signIn = async () => {
+  const signIn = useCallback(async () => {
     dispatch(setLoading());
     try {
       const result = await Auth.signIn(username, password);
@@ -55,7 +60,50 @@ export const Login: FunctionComponent<
       // }
       console.log(err);
     }
-  };
+  }, [dispatch, password, username]);
+
+  useEffect(() => {
+    const socialSignIn = async () => {
+      dispatch(setLoading());
+      try {
+        const result = await Auth.currentAuthenticatedUser();
+        if (result) {
+          dispatch(setLoggedIn());
+          dispatch(updateEmail(result.attributes.email));
+          const profile: GraphQLResult<GetProfileQuery> = (await API.graphql(
+            graphqlOperation(getProfile, { email: result.attributes.email }),
+          )) as GraphQLResult<GetProfileQuery>;
+          if (profile.data?.getProfile) {
+            dispatch(setProfileCreated());
+          } else {
+            dispatch(resetProfileCreated());
+          }
+        }
+      } catch (err: unknown) {
+        dispatch(finishLoading());
+        console.log(err);
+      }
+    };
+
+    Hub.listen('auth', async ({ payload: { event } }) => {
+      switch (event) {
+        case 'signIn':
+          console.log('signIn');
+          socialSignIn();
+          break;
+        case 'signOut':
+          console.log('signOut');
+          break;
+        case 'signIn_failure':
+        case 'cognitoHostedUI_failure':
+          console.log('Sign in failure');
+          break;
+        default:
+          break;
+      }
+    });
+  }, [dispatch, signIn]);
+
   return (
     <AuthContainer>
       <ScrollView>
