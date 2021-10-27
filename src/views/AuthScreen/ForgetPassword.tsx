@@ -36,8 +36,16 @@ export const ForgetPassword: FunctionComponent = () => {
             onChangeValue={setusername}
           />
         </Box>
-        <Box mb={8} mt={8}>
+        <Box mt={8}>
           <BaseButton title="Forget Password" onPress={ForgetPasswordSubmit} />
+        </Box>
+        <Box mt={4}>
+          <BaseButton
+            title="Back"
+            onPress={() => {
+              navigation.navigate('Login');
+            }}
+          />
         </Box>
       </ScrollView>
     </AuthContainer>

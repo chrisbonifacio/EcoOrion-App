@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { FunctionComponent } from 'react';
 
-import { AuthScreenParamListu } from '../types/AuthRouteType';
+import { AuthScreenParamList } from '../types/AuthRouteType';
 import {
-  ConfirmNewPassword,
+  ConfirmAccount,
   ForgetPassword,
   Login,
   Register,
@@ -11,17 +11,14 @@ import {
 } from '../views/AuthScreen';
 
 export const AuthRoutes: FunctionComponent = () => {
-  const Stack = createNativeStackNavigator<AuthScreenParamListu>();
+  const Stack = createNativeStackNavigator<AuthScreenParamList>();
   return (
     <>
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen
-          name="ConfirmNewPassword"
-          component={ConfirmNewPassword}
-        />
+        <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />

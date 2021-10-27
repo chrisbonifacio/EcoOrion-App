@@ -1,5 +1,5 @@
 export type AuthScreenParamList = {
-  ConfirmNewPassword: undefined;
+  ConfirmAccount: { username: string };
   ForgetPassword: undefined;
   Login: undefined;
   Register: undefined;

@@ -24,13 +24,10 @@ import {
 } from '../../redux/slice/appslice';
 import { setLoggedIn } from '../../redux/slice/authSlice';
 import { GetProfileQuery } from '../../types/api';
+import { AuthScreenParamList } from '../../types/AuthRouteType';
 
 export const Login: FunctionComponent<
-  NativeStackScreenProps<{
-    Login: undefined;
-    ForgetPassword: undefined;
-    Register: undefined;
-  }>
+  NativeStackScreenProps<AuthScreenParamList>
 > = ({ navigation }) => {
   const [username, setusername] = useState('');
   const [password, setPassword] = useState('');
@@ -52,15 +49,15 @@ export const Login: FunctionComponent<
           dispatch(resetProfileCreated());
         }
       }
-    } catch (err: unknown) {
+    } catch (err: any) {
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      if (err.message === 'User is not confirmed.') {
+        navigation.navigate('ConfirmAccount', { username });
+      }
       dispatch(finishLoading());
-      // if (error_.message === 'User is not confirmed.') {
-      //   setAuthStatus('confirmPassword');
-      //   setUserName(username);
-      // }
       console.log(err);
     }
-  }, [dispatch, password, username]);
+  }, [dispatch, navigation, password, username]);
 
   useEffect(() => {
     const socialSignIn = async () => {

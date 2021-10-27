@@ -1,4 +1,4 @@
-export { ConfirmNewPassword } from './ConfirmNewPassword';
+export { ConfirmAccount } from './ConfirmAccount';
 export { ForgetPassword } from './ForgetPassword';
 export { Login } from './Login';
 export { Register } from './Register';

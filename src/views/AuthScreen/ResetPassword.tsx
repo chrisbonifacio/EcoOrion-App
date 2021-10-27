@@ -15,25 +15,30 @@ export const ResetPassword: FunctionComponent = () => {
   const navigation = useNavigation<StackNavigationProp<AuthScreenParamList>>();
   const [passcode, updatePasscode] = useState('');
   const [password, updatePassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const resetPassword = async () => {
-    if (passcode !== '' && password !== '') {
-      try {
-        const res = await Auth.forgotPasswordSubmit(
-          route.params.username,
-          passcode,
-          password,
-        );
-        if (res) {
-          console.log(res);
-          navigation.navigate('Login');
+    if (passcode !== '' && password !== '' && confirmPassword !== '') {
+      if (password === confirmPassword) {
+        try {
+          const res = await Auth.forgotPasswordSubmit(
+            route.params.username,
+            passcode,
+            password,
+          );
+          if (res) {
+            console.log(res);
+            navigation.navigate('Login');
+          }
+        } catch (err) {
+          console.log(err);
+          Alert.alert(
+            'Error',
+            'Please check your passcode and make sure that password is longer than 8 characters with capital letters, lowercase letters, numbers & special characters',
+          );
         }
-      } catch (err) {
-        console.log(err);
-        Alert.alert(
-          'Error',
-          'Please check your passcode and make sure that password is longer than 8 characters with capital letters, lowercase letters, numbers & special characters',
-        );
+      } else {
+        Alert.alert('Error', 'Password does not match');
       }
     } else {
       Alert.alert(
@@ -55,13 +60,28 @@ export const ResetPassword: FunctionComponent = () => {
         </Box>
         <Box pb="4">
           <TextInput
-            title="Update Password"
+            title="Update New Password"
             value={password}
             onChangeValue={updatePassword}
           />
         </Box>
-        <Box mb={8} mt={8}>
+        <Box pb="4">
+          <TextInput
+            title="Confirm New Password"
+            value={confirmPassword}
+            onChangeValue={setConfirmPassword}
+          />
+        </Box>
+        <Box mt={8}>
           <BaseButton title="Confirm Reset Password" onPress={resetPassword} />
+        </Box>
+        <Box mt={4}>
+          <BaseButton
+            title="Cancel"
+            onPress={() => {
+              navigation.navigate('Login');
+            }}
+          />
         </Box>
       </ScrollView>
     </AuthContainer>

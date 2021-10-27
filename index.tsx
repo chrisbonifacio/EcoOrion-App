@@ -39,6 +39,7 @@ const awsConfig = {
     urlOpener,
   },
 };
+
 Amplify.configure(awsConfig);
 Auth.configure(awsConfig);
 
